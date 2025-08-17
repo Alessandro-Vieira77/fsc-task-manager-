@@ -10,7 +10,9 @@ const SidebarButton = ({ children, variant }) => {
   }
 
   return (
-    <a href="#" className={`rounded-lg p-2 ${getStyle()}`}>
+    <a
+      href="#"
+      className={`flex items-center gap-1 rounded-lg px-6 py-2 ${getStyle()}`}>
       {children}
     </a>
   );

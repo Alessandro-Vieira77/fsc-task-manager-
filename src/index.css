@@ -132,4 +132,8 @@
   /* body {
     @apply bg-brand-background;
   } */
+
+  body {
+    @apply bg-[#f8f8f8];
+  }
 }

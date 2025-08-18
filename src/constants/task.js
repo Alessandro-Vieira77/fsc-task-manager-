@@ -18,7 +18,7 @@ export const TASK = [
     title: "Estudar JavaScript",
     description: "Estudar const",
     time: "morning",
-    status: "done",
+    status: "not_starded",
   },
   {
     id: 4,
@@ -33,5 +33,12 @@ export const TASK = [
     description: "Estudar Relations",
     time: "night",
     status: "done",
+  },
+  {
+    id: 6,
+    title: "Estudar Drizzle",
+    description: "Estudar ORM",
+    time: "afftermoon",
+    status: "in_progress",
   },
 ];

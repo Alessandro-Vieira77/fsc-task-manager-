@@ -5,8 +5,18 @@ import IconSun from "../assets/icons/sun.svg?react";
 import IconClodSun from "../assets/icons/cloud-sun.svg?react";
 import IconMoon from "../assets/icons/moon.svg?react";
 import TaskDay from "../components/TaskDay";
+import { useState } from "react";
+import { TASK } from "../constants/task";
+import TaskItem from "./TaskItem";
+import DivTask from "./DivTask";
 
 const Tasks = () => {
+  const [tasks, setTasks] = useState(TASK);
+
+  const taskMorning = tasks.filter((task) => task.time === "morning");
+  const taskAfftermoon = tasks.filter((task) => task.time === "afftermoon");
+  const taskNight = tasks.filter((task) => task.time === "night");
+
   return (
     <div className="mx-8 w-full space-y-6 py-16">
       <div className="flex w-full justify-between">
@@ -30,23 +40,32 @@ const Tasks = () => {
       <div className="w-full space-y-6 rounded-md bg-white p-6">
         {/* Tasks */}
         {/* Manhã */}
-        <div className="w-full">
+        <DivTask>
           <TaskDay title="Manhã">
             <IconSun />
           </TaskDay>
-        </div>
+          {taskMorning.map((taskM) => (
+            <TaskItem key={taskM.id} task={taskM} />
+          ))}
+        </DivTask>
         {/* Tarde */}
-        <div className="w-full">
+        <DivTask>
           <TaskDay title={"Tarde"}>
             <IconClodSun />
           </TaskDay>
-        </div>
+          {taskAfftermoon.map((taskM) => (
+            <TaskItem key={taskM.id} task={taskM} />
+          ))}
+        </DivTask>
         {/* Noite */}
-        <div className="w-full">
+        <DivTask>
           <TaskDay title={"Noite"}>
             <IconMoon />
           </TaskDay>
-        </div>
+          {taskNight.map((taskM) => (
+            <TaskItem key={taskM.id} task={taskM} />
+          ))}
+        </DivTask>
       </div>
     </div>
   );

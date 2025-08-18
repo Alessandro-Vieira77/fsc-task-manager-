@@ -1,9 +1,11 @@
 import SideBar from "./components/Sidebar";
+import Tasks from "./components/Tasks";
 
 function App() {
   return (
-    <div>
+    <div className="flex w-full">
       <SideBar />
+      <Tasks />
     </div>
   );
 }

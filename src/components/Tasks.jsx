@@ -31,23 +31,20 @@ const Tasks = () => {
         {/* Tasks */}
         {/* Manhã */}
         <div className="w-full">
-          <TaskDay>
+          <TaskDay title="Manhã">
             <IconSun />
-            <h3>Manhã</h3>
           </TaskDay>
         </div>
         {/* Tarde */}
         <div className="w-full">
-          <TaskDay>
+          <TaskDay title={"Tarde"}>
             <IconClodSun />
-            <h3>Tarde</h3>
           </TaskDay>
         </div>
         {/* Noite */}
         <div className="w-full">
-          <TaskDay>
+          <TaskDay title={"Noite"}>
             <IconMoon />
-            <h3>Tarde</h3>
           </TaskDay>
         </div>
       </div>

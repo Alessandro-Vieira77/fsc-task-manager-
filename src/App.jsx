@@ -5,6 +5,7 @@ function App() {
   return (
     <div className="flex w-full">
       <SideBar />
+
       <Tasks />
     </div>
   );

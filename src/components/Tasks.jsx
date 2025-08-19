@@ -1,4 +1,6 @@
-import Button from "./Button";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+
 import {
   IconAdd,
   IconClodSun,
@@ -7,11 +9,10 @@ import {
   IconTrash,
 } from "../assets/icons";
 import TaskDay from "../components/TaskDay";
-import { useState } from "react";
 import { TASK } from "../constants/task";
-import TaskItem from "./TaskItem";
+import Button from "./Button";
 import DivTask from "./DivTask";
-import { toast } from "react-hot-toast";
+import TaskItem from "./TaskItem";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASK);
@@ -27,7 +28,7 @@ const Tasks = () => {
       }
 
       if (task.status === "done") {
-        toast.success("Task reniciada!");
+        toast.success("Task reniciada!!");
         return { ...task, status: "not_starded" };
       }
 

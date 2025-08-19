@@ -1,7 +1,6 @@
 import SidebarButton from "./SidebarButton";
 
-import IconHome from "../assets/icons/home.svg?react";
-import IconTask from "../assets/icons/tasks.svg?react";
+import { IconHome, IconTask } from "../assets/icons";
 
 const SideBar = () => {
   return (

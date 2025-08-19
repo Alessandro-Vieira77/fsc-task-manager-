@@ -1,9 +1,11 @@
 import Button from "./Button";
-import IconAdd from "../assets/icons/add.svg?react";
-import IconTrash from "../assets/icons/trash.svg?react";
-import IconSun from "../assets/icons/sun.svg?react";
-import IconClodSun from "../assets/icons/cloud-sun.svg?react";
-import IconMoon from "../assets/icons/moon.svg?react";
+import {
+  IconAdd,
+  IconClodSun,
+  IconMoon,
+  IconSun,
+  IconTrash,
+} from "../assets/icons";
 import TaskDay from "../components/TaskDay";
 import { useState } from "react";
 import { TASK } from "../constants/task";

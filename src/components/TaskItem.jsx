@@ -1,7 +1,4 @@
-import CheckIcon from "../assets/icons/check.svg?react";
-import LoaderIcon from "../assets/icons/loader.svg?react";
-import DetailsIcon from "../assets/icons/details.svg?react";
-import TrashIcon from "../assets/icons/trash.svg?react";
+import { IconCheck, IconLoader, IconDetail, IconTrash } from "../assets/icons";
 import Button from "./Button";
 
 const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
@@ -34,9 +31,9 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
               handleCheckBox(task.id);
             }}
           />
-          {task.status === "done" && <CheckIcon />}
+          {task.status === "done" && <IconCheck />}
           {task.status === "in_progress" && (
-            <LoaderIcon className="animate-spin text-white" />
+            <IconLoader className="animate-spin text-white" />
           )}
         </label>
         {task.title}
@@ -47,10 +44,10 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
           onClick={() => {
             handleClickDelete(task.id);
           }}>
-          <TrashIcon />
+          <IconTrash />
         </Button>
         <a href="#">
-          <DetailsIcon className="transition hover:opacity-75" />
+          <IconDetail className="transition hover:opacity-75" />
         </a>
       </div>
     </div>

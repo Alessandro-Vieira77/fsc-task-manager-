@@ -17,6 +17,20 @@ const Tasks = () => {
   const taskAfftermoon = tasks.filter((task) => task.time === "afftermoon");
   const taskNight = tasks.filter((task) => task.time === "night");
 
+  function handleCheckBox(i) {
+    if (tasks[i].status === "not_starded") {
+      return setTasks([...tasks, (tasks[i].status = "in_progress")]);
+    }
+
+    if (tasks[i].status === "in_progress") {
+      return setTasks([...tasks, (tasks[i].status = "done")]);
+    }
+
+    if (tasks[i].status === "done") {
+      return setTasks([...tasks, (tasks[i].status = "not_starded")]);
+    }
+  }
+
   return (
     <div className="mx-8 w-full space-y-6 py-16">
       <div className="flex w-full justify-between">
@@ -45,7 +59,11 @@ const Tasks = () => {
             <IconSun />
           </TaskDay>
           {taskMorning.map((taskM) => (
-            <TaskItem key={taskM.id} task={taskM} />
+            <TaskItem
+              key={taskM.id}
+              task={taskM}
+              handleCheckBox={handleCheckBox}
+            />
           ))}
         </DivTask>
         {/* Tarde */}
@@ -53,8 +71,12 @@ const Tasks = () => {
           <TaskDay title={"Tarde"}>
             <IconClodSun />
           </TaskDay>
-          {taskAfftermoon.map((taskM) => (
-            <TaskItem key={taskM.id} task={taskM} />
+          {taskAfftermoon.map((taskM, i) => (
+            <TaskItem
+              key={taskM.id}
+              task={taskM}
+              handleCheckBox={handleCheckBox}
+            />
           ))}
         </DivTask>
         {/* Noite */}
@@ -63,7 +85,11 @@ const Tasks = () => {
             <IconMoon />
           </TaskDay>
           {taskNight.map((taskM) => (
-            <TaskItem key={taskM.id} task={taskM} />
+            <TaskItem
+              key={taskM.id}
+              task={taskM}
+              handleCheckBox={handleCheckBox}
+            />
           ))}
         </DivTask>
       </div>

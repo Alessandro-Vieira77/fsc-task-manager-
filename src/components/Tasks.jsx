@@ -9,6 +9,7 @@ import { useState } from "react";
 import { TASK } from "../constants/task";
 import TaskItem from "./TaskItem";
 import DivTask from "./DivTask";
+import { toast } from "react-hot-toast";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASK);
@@ -24,14 +25,19 @@ const Tasks = () => {
       }
 
       if (task.status === "done") {
+        toast.success("Task reniciada!");
         return { ...task, status: "not_starded" };
       }
 
       if (task.status === "not_starded") {
+        toast.success("Task em progresso!");
+
         return { ...task, status: "in_progress" };
       }
 
       if (task.status === "in_progress") {
+        toast.success("Task concluída!");
+
         return { ...task, status: "done" };
       }
 
@@ -45,8 +51,8 @@ const Tasks = () => {
     const deliteTask = tasks.filter((task) => {
       return taskId !== task.id;
     });
-
     setTasks(deliteTask);
+    toast.success("Task deletada com sucesso!");
   }
 
   return (

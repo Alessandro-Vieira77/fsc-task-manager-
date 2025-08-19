@@ -1,4 +1,4 @@
-import Button from "./BUtton";
+import Button from "./Button";
 import IconAdd from "../assets/icons/add.svg?react";
 import IconTrash from "../assets/icons/trash.svg?react";
 import IconSun from "../assets/icons/sun.svg?react";
@@ -17,18 +17,36 @@ const Tasks = () => {
   const taskAfftermoon = tasks.filter((task) => task.time === "afftermoon");
   const taskNight = tasks.filter((task) => task.time === "night");
 
-  function handleCheckBox(i) {
-    if (tasks[i].status === "not_starded") {
-      return setTasks([...tasks, (tasks[i].status = "in_progress")]);
-    }
+  function handleCheckBox(taskId) {
+    const checkBox = tasks.map((task) => {
+      if (task.id !== taskId) {
+        return task;
+      }
 
-    if (tasks[i].status === "in_progress") {
-      return setTasks([...tasks, (tasks[i].status = "done")]);
-    }
+      if (task.status === "done") {
+        return { ...task, status: "not_starded" };
+      }
 
-    if (tasks[i].status === "done") {
-      return setTasks([...tasks, (tasks[i].status = "not_starded")]);
-    }
+      if (task.status === "not_starded") {
+        return { ...task, status: "in_progress" };
+      }
+
+      if (task.status === "in_progress") {
+        return { ...task, status: "done" };
+      }
+
+      setTasks(handleCheckBox);
+    });
+
+    setTasks(checkBox);
+  }
+
+  function handleClickDelete(taskId) {
+    const deliteTask = tasks.filter((task) => {
+      return taskId !== task.id;
+    });
+
+    setTasks(deliteTask);
   }
 
   return (
@@ -63,6 +81,7 @@ const Tasks = () => {
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
+              handleClickDelete={handleClickDelete}
             />
           ))}
         </DivTask>
@@ -71,11 +90,12 @@ const Tasks = () => {
           <TaskDay title={"Tarde"}>
             <IconClodSun />
           </TaskDay>
-          {taskAfftermoon.map((taskM, i) => (
+          {taskAfftermoon.map((taskM) => (
             <TaskItem
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
+              handleClickDelete={handleClickDelete}
             />
           ))}
         </DivTask>
@@ -89,6 +109,7 @@ const Tasks = () => {
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
+              handleClickDelete={handleClickDelete}
             />
           ))}
         </DivTask>

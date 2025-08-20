@@ -10,12 +10,14 @@ import {
 } from "../assets/icons";
 import TaskDay from "../components/TaskDay";
 import { TASK } from "../constants/task";
+import AddTaskDailog from "./addTaskDailog";
 import Button from "./Button";
 import DivTask from "./DivTask";
 import TaskItem from "./TaskItem";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState(TASK);
+  const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
   const taskMorning = tasks.filter((task) => task.time === "morning");
   const taskAfftermoon = tasks.filter((task) => task.time === "afftermoon");
@@ -72,10 +74,14 @@ const Tasks = () => {
             Limpar tarefas
             <IconTrash />
           </Button>
-          <Button>
+          <Button
+            onClick={() => {
+              setaddDailogTaksOpen(true);
+            }}>
             Nova Tarefa
             <IconAdd />
           </Button>
+          <AddTaskDailog isOpen={addDailogTaksOpen} />
         </div>
       </div>
       <div className="w-full space-y-6 rounded-md bg-white p-6">

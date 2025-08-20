@@ -81,7 +81,10 @@ const Tasks = () => {
             Nova Tarefa
             <IconAdd />
           </Button>
-          <AddTaskDailog isOpen={addDailogTaksOpen} />
+          <AddTaskDailog
+            isOpen={addDailogTaksOpen}
+            handleClose={() => setaddDailogTaksOpen(false)}
+          />
         </div>
       </div>
       <div className="w-full space-y-6 rounded-md bg-white p-6">

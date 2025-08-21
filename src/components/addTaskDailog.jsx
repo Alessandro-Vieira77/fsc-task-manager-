@@ -7,6 +7,7 @@ import { CSSTransition } from "react-transition-group";
 import Button from "./Button";
 import Input from "./Input";
 import LabelInput from "./LabelInput";
+import TimeSelect from "./TimeSelect";
 const AddTaskDailog = ({ isOpen, handleClose }) => {
   const nodeRef = useRef(null);
 
@@ -36,19 +37,8 @@ const AddTaskDailog = ({ isOpen, handleClose }) => {
                   id="title"
                   placeholder="Digite seu nome"
                 />
-                <div className="flex w-full flex-col">
-                  <LabelInput htmlFor="time">Hórario</LabelInput>
 
-                  <select
-                    className="rounded-lg border-2 border-[#ECECEC] py-3 pl-6 outline-[#00ADB5]"
-                    name="time"
-                    id="time">
-                    <option defaultValue={"selected"}>Selecione</option>
-                    <option value="morning">Manhã</option>
-                    <option value="affetermoon">Tarde</option>
-                    <option value="night">Noite</option>
-                  </select>
-                </div>
+                <TimeSelect />
 
                 <Input
                   title={"Descrição"}

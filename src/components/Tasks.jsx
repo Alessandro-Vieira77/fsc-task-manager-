@@ -60,6 +60,11 @@ const Tasks = () => {
     toast.success("Task deletada com sucesso!");
   }
 
+  function handleAddTasks(task) {
+    setTasks([...tasks, task]);
+    toast.success("Nova tarefa adicionada!");
+  }
+
   return (
     <div className="mx-8 w-full space-y-6 py-16">
       <div className="flex w-full justify-between">
@@ -84,6 +89,7 @@ const Tasks = () => {
           <AddTaskDailog
             isOpen={addDailogTaksOpen}
             handleClose={() => setaddDailogTaksOpen(false)}
+            handleAddTasks={handleAddTasks}
           />
         </div>
       </div>

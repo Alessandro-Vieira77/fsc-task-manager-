@@ -7,18 +7,29 @@ import { v4 } from "uuid";
 
 import Button from "./Button";
 import Input from "./Input";
-import LabelInput from "./LabelInput";
 import TimeSelect from "./TimeSelect";
 const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
-  const [titte, setTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [time, setTime] = useState("morning");
   const [description, setDescription] = useState("");
   const nodeRef = useRef(null);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle("");
+      setTime("morning");
+      setDescription("");
+    }
+  }, [isOpen]);
+
   function handleSaveTasks() {
+    if (!title.trim() || !time.trim() || !description.trim()) {
+      return alert("Preencha todos os campos dos formulários do input!");
+    }
+
     handleAddTasks({
       id: v4(),
-      title: titte,
+      title: title,
       description: description,
       time: time,
       status: "not_starded",
@@ -26,14 +37,6 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
 
     handleClose();
   }
-
-  useEffect(() => {
-    if (!isOpen) {
-      setTitle("");
-      setTime("");
-      setDescription("");
-    }
-  }, [isOpen]);
 
   return (
     <CSSTransition
@@ -60,7 +63,7 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
                   type="text"
                   id="title"
                   placeholder="Digite seu nome"
-                  value={titte}
+                  value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
 

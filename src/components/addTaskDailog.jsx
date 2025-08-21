@@ -1,6 +1,6 @@
 import "./addTaskDailog.css";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import { v4 } from "uuid";
@@ -11,7 +11,7 @@ import LabelInput from "./LabelInput";
 import TimeSelect from "./TimeSelect";
 const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
   const [titte, setTitle] = useState("");
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState("morning");
   const [description, setDescription] = useState("");
   const nodeRef = useRef(null);
 
@@ -26,6 +26,14 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
 
     handleClose();
   }
+
+  useEffect(() => {
+    if (!isOpen) {
+      setTitle("");
+      setTime("");
+      setDescription("");
+    }
+  }, [isOpen]);
 
   return (
     <CSSTransition

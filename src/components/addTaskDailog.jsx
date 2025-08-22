@@ -9,37 +9,30 @@ import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
-  const [title, setTitle] = useState("");
-  const [time, setTime] = useState("");
-  const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
   const nodeRef = useRef(null);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setTitle("");
-      setTime("");
-      setDescription("");
-    }
-  }, [isOpen]);
+  const titleRef = useRef(null);
+  const selectRef = useRef(null);
+  const descriptionRef = useRef(null);
 
   function handleSaveTasks() {
     let newErros = [];
-    if (!title.trim()) {
+
+    if (!titleRef.current.value.trim()) {
       newErros.push({
         inputName: "title",
         description: "O campo name é obrigatório",
       });
     }
 
-    if (!time.trim()) {
+    if (!selectRef.current.value.trim()) {
       newErros.push({
         inputName: "time",
         description: "O campo hórario é obrigatório",
       });
     }
 
-    if (!description.trim()) {
+    if (!descriptionRef.current.value.trim()) {
       newErros.push({
         inputName: "description",
         description: "O campo descrição é obrigatório",
@@ -54,9 +47,9 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
 
     handleAddTasks({
       id: v4(),
-      title: title,
-      description: description,
-      time: time,
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      time: selectRef.current.value,
       status: "not_starded",
     });
 
@@ -93,25 +86,19 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
                   type="text"
                   id="title"
                   placeholder="Digite seu nome"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
                   error={titleErrors?.description}
+                  ref={titleRef}
                 />
 
-                <TimeSelect
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                  error={timeErrors?.description}
-                />
+                <TimeSelect error={timeErrors?.description} ref={selectRef} />
 
                 <Input
                   title={"Descrição"}
                   type="text"
                   placeholder="Digite a descrição"
                   id="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
                   error={descriptionErrors?.description}
+                  ref={descriptionRef}
                 />
               </div>
               <div className="flex w-full items-center gap-4 pt-4">

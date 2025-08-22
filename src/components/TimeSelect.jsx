@@ -1,6 +1,6 @@
 import LabelInput from "./LabelInput";
 
-const TimeSelect = ({ ...props }) => {
+const TimeSelect = ({ error, ...props }) => {
   return (
     <div className="flex w-full flex-col">
       <LabelInput htmlFor="time">Hórario</LabelInput>
@@ -15,6 +15,11 @@ const TimeSelect = ({ ...props }) => {
         <option value="afftermoon">Tarde</option>
         <option value="night">Noite</option>
       </select>
+      {
+        <span className="w-full pt-1 text-left text-xs text-red-500">
+          {error}
+        </span>
+      }
     </div>
   );
 };

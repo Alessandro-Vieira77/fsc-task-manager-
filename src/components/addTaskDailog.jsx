@@ -10,21 +10,45 @@ import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
   const [title, setTitle] = useState("");
-  const [time, setTime] = useState("morning");
+  const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState([]);
   const nodeRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) {
       setTitle("");
-      setTime("morning");
+      setTime("");
       setDescription("");
     }
   }, [isOpen]);
 
   function handleSaveTasks() {
-    if (!title.trim() || !time.trim() || !description.trim()) {
-      return alert("Preencha todos os campos dos formulários do input!");
+    let newErros = [];
+    if (!title.trim()) {
+      newErros.push({
+        inputName: "title",
+        description: "O campo name é obrigatório",
+      });
+    }
+
+    if (!time.trim()) {
+      newErros.push({
+        inputName: "time",
+        description: "O campo hórario é obrigatório",
+      });
+    }
+
+    if (!description.trim()) {
+      newErros.push({
+        inputName: "description",
+        description: "O campo descrição é obrigatório",
+      });
+    }
+
+    if (newErros.length > 0) {
+      setErrors(newErros);
+      return;
     }
 
     handleAddTasks({
@@ -38,6 +62,11 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
     handleClose();
   }
 
+  const titleErrors = errors.find((erro) => erro.inputName === "title");
+  const timeErrors = errors.find((erro) => erro.inputName === "time");
+  const descriptionErrors = errors.find(
+    (erro) => erro.inputName === "description",
+  );
   return (
     <CSSTransition
       in={isOpen}
@@ -65,11 +94,13 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
                   placeholder="Digite seu nome"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  error={titleErrors?.description}
                 />
 
                 <TimeSelect
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
+                  error={timeErrors?.description}
                 />
 
                 <Input
@@ -79,6 +110,7 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  error={descriptionErrors?.description}
                 />
               </div>
               <div className="flex w-full items-center gap-4 pt-4">

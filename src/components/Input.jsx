@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 
+import ErrorMenssage from "./ErrrorMenssage";
 import LabelInput from "./LabelInput";
 
 const Input = forwardRef(({ title, error, ...props }, ref) => {
@@ -11,11 +12,7 @@ const Input = forwardRef(({ title, error, ...props }, ref) => {
         ref={ref}
         {...props}
       />
-      {
-        <span className="w-full pt-1 text-left text-xs text-red-500">
-          {error}
-        </span>
-      }
+      <ErrorMenssage>{error}</ErrorMenssage>
     </div>
   );
 });

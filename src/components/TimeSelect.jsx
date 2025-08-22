@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 
+import ErrorMenssage from "./ErrrorMenssage";
 import LabelInput from "./LabelInput";
 
 const TimeSelect = forwardRef(({ error, ...props }, ref) => {
@@ -18,11 +19,7 @@ const TimeSelect = forwardRef(({ error, ...props }, ref) => {
         <option value="afftermoon">Tarde</option>
         <option value="night">Noite</option>
       </select>
-      {
-        <span className="w-full pt-1 text-left text-xs text-red-500">
-          {error}
-        </span>
-      }
+      <ErrorMenssage>{error}</ErrorMenssage>
     </div>
   );
 });

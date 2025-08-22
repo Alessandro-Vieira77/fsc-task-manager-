@@ -25,7 +25,7 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
       });
     }
 
-    if (!selectRef.current.value.trim()) {
+    if (selectRef.current.value === "Selecione") {
       newErros.push({
         inputName: "time",
         description: "O campo hórario é obrigatório",

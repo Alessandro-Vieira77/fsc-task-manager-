@@ -1,11 +1,14 @@
+import { forwardRef } from "react";
+
 import LabelInput from "./LabelInput";
 
-const TimeSelect = ({ error, ...props }) => {
+const TimeSelect = forwardRef(({ error, ...props }, ref) => {
   return (
     <div className="flex w-full flex-col">
       <LabelInput htmlFor="time">Hórario</LabelInput>
 
       <select
+        ref={ref}
         {...props}
         className="rounded-lg border-2 border-[#ECECEC] py-3 pl-6 outline-[#00ADB5]"
         name="time"
@@ -22,6 +25,8 @@ const TimeSelect = ({ error, ...props }) => {
       }
     </div>
   );
-};
+});
+
+TimeSelect.displayName = "TimeSelect";
 
 export default TimeSelect;

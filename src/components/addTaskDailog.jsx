@@ -46,8 +46,9 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
       });
     }
 
+    setErrors(newErros);
+
     if (newErros.length > 0) {
-      setErrors(newErros);
       return;
     }
 

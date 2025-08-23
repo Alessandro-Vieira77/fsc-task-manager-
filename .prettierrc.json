@@ -9,5 +9,6 @@
   "bracketSameLine": true,
   "quoteProps": "as-needed",
   "endOfLine": "lf",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "checkIgnorePragma": true
 }

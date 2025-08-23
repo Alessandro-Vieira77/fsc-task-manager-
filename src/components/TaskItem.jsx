@@ -1,18 +1,18 @@
-import { IconCheck, IconLoader, IconDetail, IconTrash } from "../assets/icons";
+import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import Button from "./Button";
 
 const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
   function getStatusClasses() {
     if (task.status === "done") {
-      return "bg-[#00ADB5] text-[#00ADB5]";
+      return "bg-brand-primary text-brand-primary";
     }
 
     if (task.status === "in_progress") {
-      return "bg-[#FFAA04] text-[#FFAA04]";
+      return "bg-brand-process text-brand-process";
     }
 
     if (task.status === "not_starded") {
-      return "bg-[#9A9C9F] text-[#9A9C9F] ";
+      return "bg-brand-text-gray text-brand-text-gray ";
     }
   }
 
@@ -33,12 +33,12 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
           />
           {task.status === "done" && <IconCheck />}
           {task.status === "in_progress" && (
-            <IconLoader className="animate-spin text-white" />
+            <IconLoader className="animate-spin text-brand-white" />
           )}
         </label>
         {task.title}
       </div>
-      <div className="flex items-center gap-1 text-[#9A9C9F]">
+      <div className="flex items-center gap-1 text-brand-text-gray">
         <Button
           variant="Ghost"
           onClick={() => {

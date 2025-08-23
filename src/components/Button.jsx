@@ -1,21 +1,21 @@
 const Button = ({
   children,
-  variant = "primary",
+  variant = "brand-primary",
   size = "small",
   className,
   ...props
 }) => {
   function getVariantClass() {
-    if (variant === "primary") {
-      return "bg-[#00ADB5] text-white";
+    if (variant === "brand-primary") {
+      return "bg-brand-primary text-white";
     }
 
     if (variant === "Ghost") {
-      return "text-[#818181]";
+      return "text-brand-dark-gray";
     }
 
     if (variant === "secundary") {
-      return "text-[#35383E] bg-[#EEEEEE]";
+      return "text--brand-dark-blue bg-brand-light-gray";
     }
   }
 
@@ -31,7 +31,7 @@ const Button = ({
 
   return (
     <button
-      className={`flex h-6 items-center justify-center gap-1 rounded-md border-[#00ADB5] font-semibold transition hover:bg-opacity-75 ${getVariantClass()} ${getSizeClass()} ${className}`}
+      className={`flex h-6 items-center justify-center gap-1 rounded-md border-brand-primary font-semibold transition hover:bg-opacity-75 ${getVariantClass()} ${getSizeClass()} ${className}`}
       {...props}>
       {children}
     </button>

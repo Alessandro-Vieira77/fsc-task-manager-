@@ -1,6 +1,6 @@
 import "./addTaskDailog.css";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import { v4 } from "uuid";
@@ -73,11 +73,11 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
           <div
             ref={nodeRef}
             className="fixed bottom-0 left-0 top-0 flex h-screen w-screen items-center justify-center backdrop-blur">
-            <div className="flex w-[336px] flex-col items-center space-y-1 rounded-xl bg-white p-5 shadow">
-              <h1 className="text-xl font-semibold text-[#35383E]">
+            <div className="flex w-[336px] flex-col items-center space-y-1 rounded-xl bg-brand-white p-5 shadow">
+              <h1 className="text-brand-brand-dark-blue text-xl font-semibold">
                 Nova Tarefa
               </h1>
-              <p className="pb-4 text-sm font-light text-[#9A9C9F]">
+              <p className="pb-4 text-sm font-light text-brand-text-gray">
                 Insira as informaçãoes abaixo
               </p>
               <div className="flex w-full flex-col gap-4">

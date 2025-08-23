@@ -11,7 +11,7 @@ const TimeSelect = forwardRef(({ error, ...props }, ref) => {
       <select
         ref={ref}
         {...props}
-        className="rounded-lg border-2 border-[#ECECEC] py-3 pl-6 outline-[#00ADB5]"
+        className="rounded-lg border-2 border-brand-border py-3 pl-6 outline-brand-primary"
         name="time"
         id="time">
         <option defaultValue={"selected"}>Selecione</option>

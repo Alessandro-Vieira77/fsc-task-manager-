@@ -1,15 +1,16 @@
-import SidebarButton from "./SidebarButton";
-
 import { IconHome, IconTask } from "../assets/icons";
+import SidebarButton from "./SidebarButton";
 
 const SideBar = () => {
   return (
-    <div className="h-screen w-64 bg-white">
+    <div className="h-screen w-64 bg-brand-white">
       <div className="space-y-4 px-8 pt-6">
-        <h1 className="text-xl font-semibold text-[#00ADB5]">Task Manager</h1>
+        <h1 className="text-xl font-semibold text-brand-primary">
+          Task Manager
+        </h1>
         <p className="text-xs">
           Um simples{" "}
-          <span className="text-[#00ADB5]">organizador de tarefas</span>
+          <span className="text-brand-primary">organizador de tarefas</span>
         </p>
       </div>
 

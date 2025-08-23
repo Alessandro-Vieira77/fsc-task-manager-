@@ -30,7 +30,7 @@ const Tasks = () => {
       }
 
       if (task.status === "done") {
-        toast.success("Task reniciada!!");
+        toast.success("Task reniciada!");
         return { ...task, status: "not_starded" };
       }
 
@@ -72,14 +72,17 @@ const Tasks = () => {
           <span className="text-xs font-semibold text-brand-primary">
             Minhas tarefas
           </span>
-          <h2 className="text-xl font-semibold">Minhas Tarefas</h2>
+          <h2 className="text-xl font-semibold text-brand-dark-blue">
+            Minhas Tarefas
+          </h2>
         </div>
         <div className="flex gap-2">
-          <Button variant="Ghost">
+          <Button color="ghost">
             Limpar tarefas
             <IconTrash />
           </Button>
           <Button
+            color={"primary"}
             onClick={() => {
               setaddDailogTaksOpen(true);
             }}>

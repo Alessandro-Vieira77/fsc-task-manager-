@@ -14,12 +14,12 @@ const SideBar = () => {
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 p-2">
-        <SidebarButton variant="unSelected">
+      <div className="mt-6 flex flex-col gap-2 p-2">
+        <SidebarButton color="unSelected">
           <IconHome />
           Inicio
         </SidebarButton>
-        <SidebarButton variant="selected">
+        <SidebarButton color="selected">
           <IconTask />
           Minhas tarefas
         </SidebarButton>

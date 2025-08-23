@@ -103,15 +103,16 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
               </div>
               <div className="flex w-full items-center gap-4 pt-4">
                 <Button
-                  variant={"secundary"}
+                  color={"secundary"}
                   size="large"
-                  className={"w-full"}
+                  width={"full"}
                   onClick={() => handleClose()}>
                   Cancelar
                 </Button>
                 <Button
+                  color={"primary"}
                   size="large"
-                  className={"w-full"}
+                  width={"full"}
                   onClick={() => handleSaveTasks()}>
                   Salvar
                 </Button>

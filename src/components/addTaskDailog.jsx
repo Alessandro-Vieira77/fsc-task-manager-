@@ -1,5 +1,6 @@
 import "./addTaskDailog.css";
 
+import PropTypes from "prop-types";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
@@ -124,6 +125,12 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
       </div>
     </CSSTransition>
   );
+};
+
+AddTaskDailog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleAddTasks: PropTypes.func.isRequired,
 };
 
 export default AddTaskDailog;

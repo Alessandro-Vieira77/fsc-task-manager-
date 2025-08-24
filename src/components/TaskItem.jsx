@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import Button from "./Button";
 
@@ -40,7 +42,9 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
       </div>
       <div className="flex items-center gap-1 text-brand-text-gray">
         <Button
-          variant="Ghost"
+          color="ghost"
+          width={""}
+          size={""}
           onClick={() => {
             handleClickDelete(task.id);
           }}>
@@ -52,6 +56,18 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
       </div>
     </div>
   );
+};
+
+TaskItem.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+  }),
+  handleCheckBox: PropTypes.func.isRequired,
+  handleClickDelete: PropTypes.func.isRequired,
 };
 
 export default TaskItem;

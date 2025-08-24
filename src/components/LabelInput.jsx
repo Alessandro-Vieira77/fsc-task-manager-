@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 const LabelInput = ({ children, ...props }) => {
   return (
     <label
@@ -6,6 +7,10 @@ const LabelInput = ({ children, ...props }) => {
       {children}
     </label>
   );
+};
+
+LabelInput.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default LabelInput;

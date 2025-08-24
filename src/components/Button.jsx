@@ -35,7 +35,7 @@ const Button = ({ children, color, size, width, ...props }) => {
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
   size: PropTypes.string,
   width: PropTypes.string,
 };

@@ -23,7 +23,7 @@ const SidebarButton = ({ children, color }) => {
 
 SidebarButton.propTypes = {
   children: PropTypes.node.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
 };
 
 export default SidebarButton;

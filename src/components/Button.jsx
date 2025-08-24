@@ -1,5 +1,7 @@
+import PropTypes from "prop-types";
 import { tv } from "tailwind-variants";
-const Button = ({ children, color, size, width, className, ...props }) => {
+
+const Button = ({ children, color, size, width, ...props }) => {
   const button = tv({
     base: "flex h-6 items-center justify-center gap-1 rounded-md border-brand-primary font-semibold transition hover:bg-opacity-75",
     variants: {
@@ -29,6 +31,13 @@ const Button = ({ children, color, size, width, className, ...props }) => {
       {children}
     </button>
   );
+};
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  color: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  width: PropTypes.string,
 };
 
 export default Button;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { forwardRef } from "react";
 
 import ErrorMenssage from "./ErrrorMenssage";
@@ -25,5 +26,9 @@ const TimeSelect = forwardRef(({ error, ...props }, ref) => {
 });
 
 TimeSelect.displayName = "TimeSelect";
+
+TimeSelect.propTypes = {
+  error: PropTypes.string,
+};
 
 export default TimeSelect;

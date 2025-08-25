@@ -51,7 +51,7 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
       title: titleRef.current.value,
       description: descriptionRef.current.value,
       time: selectRef.current.value,
-      status: "not_starded",
+      status: "not_started",
     });
 
     handleClose();

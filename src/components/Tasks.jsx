@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import {
@@ -9,19 +9,31 @@ import {
   IconTrash,
 } from "../assets/icons";
 import TaskDay from "../components/TaskDay";
-import { TASK } from "../constants/task";
 import AddTaskDailog from "./addTaskDailog";
 import Button from "./Button";
 import DivTask from "./DivTask";
 import TaskItem from "./TaskItem";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState(TASK);
+  const [tasks, setTasks] = useState([]);
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
   const taskMorning = tasks.filter((task) => task.time === "morning");
-  const taskAfftermoon = tasks.filter((task) => task.time === "afftermoon");
+  const taskAfftermoon = tasks.filter((task) => task.time === "afternoon");
   const taskNight = tasks.filter((task) => task.time === "night");
+
+  useEffect(() => {
+    async function getTasks() {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      setTasks(data);
+    }
+
+    getTasks();
+  }, []);
 
   function handleCheckBox(taskId) {
     const checkBox = tasks.map((task) => {
@@ -34,7 +46,7 @@ const Tasks = () => {
         return { ...task, status: "not_starded" };
       }
 
-      if (task.status === "not_starded") {
+      if (task.status === "not_started") {
         toast.success("Task em progresso!");
 
         return { ...task, status: "in_progress" };

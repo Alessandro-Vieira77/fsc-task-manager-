@@ -13,7 +13,7 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
       return "bg-brand-process text-brand-process";
     }
 
-    if (task.status === "not_starded") {
+    if (task.status === "not_started") {
       return "bg-brand-text-gray text-brand-text-gray ";
     }
   }
@@ -60,7 +60,7 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
 
 TaskItem.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     time: PropTypes.string.isRequired,

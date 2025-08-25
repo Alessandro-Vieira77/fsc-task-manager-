@@ -64,7 +64,15 @@ const Tasks = () => {
     setTasks(checkBox);
   }
 
-  function handleClickDelete(taskId) {
+  async function handleClickDelete(taskId) {
+    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      return toast.error("Erro ao deletar a tarefa");
+    }
+
     const deliteTask = tasks.filter((task) => {
       return taskId !== task.id;
     });
@@ -72,7 +80,15 @@ const Tasks = () => {
     toast.success("Task deletada com sucesso!");
   }
 
-  function handleAddTasks(task) {
+  async function handleAddTasks(task) {
+    const response = await fetch("http://localhost:3000/tasks", {
+      method: "POST",
+      body: JSON.stringify(task),
+    });
+
+    if (!response.ok) {
+      return toast.error("Erro ao salvar a tarefa, tente novamente.");
+    }
     setTasks([...tasks, task]);
     toast.success("Nova tarefa adicionada!");
   }

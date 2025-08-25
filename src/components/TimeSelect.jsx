@@ -17,7 +17,7 @@ const TimeSelect = forwardRef(({ error, ...props }, ref) => {
         id="time">
         <option defaultValue={"selected"}>Selecione</option>
         <option value="morning">Manhã</option>
-        <option value="afftermoon">Tarde</option>
+        <option value="afternoon">Tarde</option>
         <option value="night">Noite</option>
       </select>
       <ErrorMenssage>{error}</ErrorMenssage>

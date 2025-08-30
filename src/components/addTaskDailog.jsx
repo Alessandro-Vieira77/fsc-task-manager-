@@ -90,9 +90,14 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks, loading }) => {
                   placeholder="Digite seu nome"
                   error={titleErrors?.description}
                   ref={titleRef}
+                  disabled={loading}
                 />
 
-                <TimeSelect error={timeErrors?.description} ref={selectRef} />
+                <TimeSelect
+                  error={timeErrors?.description}
+                  ref={selectRef}
+                  loading={loading}
+                />
 
                 <Input
                   title={"Descrição"}
@@ -101,6 +106,7 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks, loading }) => {
                   id="description"
                   error={descriptionErrors?.description}
                   ref={descriptionRef}
+                  disabled={loading}
                 />
               </div>
               <div className="flex w-full items-center gap-4 pt-4">

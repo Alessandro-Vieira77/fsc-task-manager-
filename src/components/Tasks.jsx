@@ -64,15 +64,7 @@ const Tasks = () => {
     setTasks(checkBox);
   }
 
-  async function handleClickDelete(taskId) {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: "DELETE",
-    });
-
-    if (!response.ok) {
-      return toast.error("Erro ao deletar a tarefa");
-    }
-
+  function handleOnDeleteSucess(taskId) {
     const deliteTask = tasks.filter((task) => {
       return taskId !== task.id;
     });
@@ -136,7 +128,7 @@ const Tasks = () => {
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
-              handleClickDelete={handleClickDelete}
+              handleOnDeleteSucess={handleOnDeleteSucess}
             />
           ))}
         </DivTask>
@@ -150,7 +142,7 @@ const Tasks = () => {
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
-              handleClickDelete={handleClickDelete}
+              handleOnDeleteSucess={handleOnDeleteSucess}
             />
           ))}
         </DivTask>
@@ -164,7 +156,7 @@ const Tasks = () => {
               key={taskM.id}
               task={taskM}
               handleCheckBox={handleCheckBox}
-              handleClickDelete={handleClickDelete}
+              handleOnDeleteSucess={handleOnDeleteSucess}
             />
           ))}
         </DivTask>

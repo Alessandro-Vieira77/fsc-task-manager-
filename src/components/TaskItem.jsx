@@ -1,9 +1,27 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import Button from "./Button";
 
-const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
+const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
+  const [loadingDelete, setLoadingDelete] = useState(false);
+
+  const onDeleteClick = async () => {
+    setLoadingDelete(true);
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      setLoadingDelete(false);
+      return toast.error("Erro ao deletar a tarefa");
+    }
+    handleOnDeleteSucess(task.id);
+    setLoadingDelete(false);
+  };
+
   function getStatusClasses() {
     if (task.status === "done") {
       return "bg-brand-primary text-brand-primary";
@@ -43,12 +61,15 @@ const TaskItem = ({ task, handleCheckBox, handleClickDelete }) => {
       <div className="flex items-center gap-1 text-brand-text-gray">
         <Button
           color="ghost"
-          width={""}
-          size={""}
+          disabled={loadingDelete}
           onClick={() => {
-            handleClickDelete(task.id);
+            onDeleteClick(task.id);
           }}>
-          <IconTrash />
+          {loadingDelete ? (
+            <IconLoader className="animate-spin text-brand-process" />
+          ) : (
+            <IconTrash />
+          )}
         </Button>
         <a href="#">
           <IconDetail className="transition hover:opacity-75" />
@@ -67,7 +88,7 @@ TaskItem.propTypes = {
     status: PropTypes.string.isRequired,
   }),
   handleCheckBox: PropTypes.func.isRequired,
-  handleClickDelete: PropTypes.func.isRequired,
+  handleOnDeleteSucess: PropTypes.func,
 };
 
 export default TaskItem;

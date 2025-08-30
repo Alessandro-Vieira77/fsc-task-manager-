@@ -21,7 +21,7 @@ const Input = forwardRef(({ title, error, ...props }, ref) => {
 Input.displayName = "Input";
 
 Input.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   error: PropTypes.string,
 };
 

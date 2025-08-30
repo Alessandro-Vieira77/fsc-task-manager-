@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import Button from "./Button";
-
 const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
   const [loadingDelete, setLoadingDelete] = useState(false);
 
@@ -74,9 +74,9 @@ const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
             <IconTrash />
           )}
         </Button>
-        <a href="#">
+        <Link to={`/details/${task.id}`}>
           <IconDetail className="transition hover:opacity-75" />
-        </a>
+        </Link>
       </div>
     </div>
   );

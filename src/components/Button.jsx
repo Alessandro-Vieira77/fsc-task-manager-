@@ -10,6 +10,10 @@ const Button = ({ children, color, size, width, ...props }) => {
         secundary: "text--brand-dark-blue bg-brand-light-gray",
         ghost: "text-brand-dark-gray",
       },
+      disabled: {
+        true: "cursor-not-allowed opacity-50 hover:opacity-50",
+      },
+
       size: {
         small: "px-3 py-1 text-xs font-semibold",
         large: "px-3 py-4 text-sm  ",
@@ -26,7 +30,12 @@ const Button = ({ children, color, size, width, ...props }) => {
 
   return (
     <button
-      className={button({ size: size, color: color, width: width })}
+      className={button({
+        size: size,
+        color: color,
+        disabled: props.disabled,
+        width: width,
+      })}
       {...props}>
       {children}
     </button>

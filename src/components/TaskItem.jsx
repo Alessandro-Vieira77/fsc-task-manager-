@@ -55,6 +55,9 @@ const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
           {task.status === "in_progress" && (
             <IconLoader className="animate-spin text-brand-white" />
           )}
+          {/* {task.status === "not_started" && (
+            <IconDetail className="bg-brand-text-gray" />
+          )} */}
         </label>
         {task.title}
       </div>

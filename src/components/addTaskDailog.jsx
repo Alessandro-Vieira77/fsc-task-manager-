@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import "./addTaskDailog.css";
 
 import PropTypes from "prop-types";
@@ -6,11 +7,13 @@ import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 import { v4 } from "uuid";
 
+import { IconLoader } from "../assets/icons";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
-const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
+const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks, loading }) => {
   const [errors, setErrors] = useState([]);
+
   const nodeRef = useRef(null);
   const titleRef = useRef(null);
   const selectRef = useRef(null);
@@ -53,8 +56,6 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
       time: selectRef.current.value,
       status: "not_started",
     });
-
-    handleClose();
   }
 
   const titleErrors = errors.find((erro) => erro.inputName === "title");
@@ -111,11 +112,16 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks }) => {
                   Cancelar
                 </Button>
                 <Button
+                  disabled={loading}
                   color={"primary"}
                   size="large"
                   width={"full"}
                   onClick={() => handleSaveTasks()}>
-                  Salvar
+                  {loading ? (
+                    <IconLoader className="animate-spin text-brand-white" />
+                  ) : (
+                    "Salvar"
+                  )}
                 </Button>
               </div>
             </div>

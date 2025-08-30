@@ -17,6 +17,7 @@ import TaskItem from "./TaskItem";
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const taskMorning = tasks.filter((task) => task.time === "morning");
   const taskAfftermoon = tasks.filter((task) => task.time === "afternoon");
@@ -43,7 +44,7 @@ const Tasks = () => {
 
       if (task.status === "done") {
         toast.success("Task reniciada!");
-        return { ...task, status: "not_starded" };
+        return { ...task, status: "not_started" };
       }
 
       if (task.status === "not_started") {
@@ -73,16 +74,20 @@ const Tasks = () => {
   }
 
   async function handleAddTasks(task) {
+    setLoadingDelete(true);
     const response = await fetch("http://localhost:3000/tasks", {
       method: "POST",
       body: JSON.stringify(task),
     });
 
     if (!response.ok) {
+      setLoadingDelete(false);
       return toast.error("Erro ao salvar a tarefa, tente novamente.");
     }
     setTasks([...tasks, task]);
     toast.success("Nova tarefa adicionada!");
+    setLoadingDelete(false);
+    setaddDailogTaksOpen(false);
   }
 
   return (
@@ -113,6 +118,7 @@ const Tasks = () => {
             isOpen={addDailogTaksOpen}
             handleClose={() => setaddDailogTaksOpen(false)}
             handleAddTasks={handleAddTasks}
+            loading={loadingDelete}
           />
         </div>
       </div>

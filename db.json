@@ -1,3 +1,25 @@
 {
-  "tasks": []
+  "tasks": [
+    {
+      "id": "f7b24260-0320-46df-9715-c6c8cbba198d",
+      "title": "Estudar o code start",
+      "description": "No sábado ",
+      "time": "afternoon",
+      "status": "not_started"
+    },
+    {
+      "id": "cb98c06d-d779-4da7-a734-406e91dd058c",
+      "title": "estudar já javaScript ",
+      "description": "arrows",
+      "time": "night",
+      "status": "not_started"
+    },
+    {
+      "id": "71d959bc-0b5c-4440-9200-2dc5afd548aa",
+      "title": "b",
+      "description": "b",
+      "time": "morning",
+      "status": "not_started"
+    }
+  ]
 }

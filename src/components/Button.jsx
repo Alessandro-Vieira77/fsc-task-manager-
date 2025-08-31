@@ -9,6 +9,7 @@ const Button = ({ children, color, size, width, ...props }) => {
         primary: "bg-brand-primary text-white",
         secundary: "text--brand-dark-blue bg-brand-light-gray",
         ghost: "text-brand-dark-gray",
+        danger: "bg-brand-danger text-white",
       },
       disabled: {
         true: "cursor-not-allowed opacity-50 hover:opacity-50",

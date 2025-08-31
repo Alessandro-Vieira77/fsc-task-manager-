@@ -1,5 +1,7 @@
 import IconAdd from "./add.svg?react";
+import IconArrowLeft from "./arrow-left.svg?react";
 import IconCheck from "./check.svg?react";
+import IconChevronRight from "./chevron-right.svg?react";
 import IconClodSun from "./cloud-sun.svg?react";
 import IconDetail from "./details.svg?react";
 import IconHome from "./home.svg?react";
@@ -11,7 +13,9 @@ import IconTrash from "./trash.svg?react";
 
 export {
   IconAdd,
+  IconArrowLeft,
   IconCheck,
+  IconChevronRight,
   IconClodSun,
   IconDetail,
   IconHome,

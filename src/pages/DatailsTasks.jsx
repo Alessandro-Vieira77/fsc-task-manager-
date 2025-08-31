@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import { func } from "prop-types";
 import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,20 @@ const DetailsTasks = () => {
     return <div>Carregando...</div>;
   }
 
+  const handleDeleteTask = async () => {
+    const respoonse = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+      method: "DELETE",
+    });
+
+    if (!respoonse.ok) {
+      toast.error("Erro ao deletar a tarefa!");
+      throw new Error("erro ao deltar a tarefa ");
+    } else {
+      navigate("/");
+      toast.success("Tarefa deletada com sucesso!");
+    }
+  };
+
   return (
     <div className="flex w-full">
       <Sidebar />
@@ -57,16 +72,16 @@ const DetailsTasks = () => {
             <h1 className="text-xl font-bold text-brand-dark-blue">
               {tasks?.title}
             </h1>
-            <Button color="danger">
+            <Button onClick={handleDeleteTask} color="danger">
               <IconTrash /> Deletar Tarefa
             </Button>
           </div>
         </div>
 
         <div className="w-full space-y-6 rounded-md bg-brand-white p-6">
-          <Input title="Título" defaultvalue={tasks?.title} />
+          <Input title="Título" defaultValue={tasks?.title} />
           <div>
-            <TimeSelect label="Hórario" defaultValue={tasks?.time} />
+            <TimeSelect label="Hórario" value={tasks?.time} />
           </div>
           <Input title="Descrição" defaultValue={tasks?.description} />
         </div>

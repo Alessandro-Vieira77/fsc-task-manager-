@@ -123,48 +123,65 @@ const Tasks = () => {
         </div>
       </div>
       <div className="w-full space-y-6 rounded-md bg-brand-white p-6">
-        {/* Tasks */}
         {/* Manhã */}
         <DivTask>
           <TaskDay title="Manhã">
             <IconSun />
           </TaskDay>
-          {taskMorning.map((taskM) => (
-            <TaskItem
-              key={taskM.id}
-              task={taskM}
-              handleCheckBox={handleCheckBox}
-              handleOnDeleteSucess={handleOnDeleteSucess}
-            />
-          ))}
+          {taskMorning.length > 0 ? (
+            taskMorning.map((taskM) => (
+              <TaskItem
+                key={taskM.id}
+                task={taskM}
+                handleCheckBox={handleCheckBox}
+                handleOnDeleteSucess={handleOnDeleteSucess}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-brand-text-gray">
+              Não há tarefas para este período
+            </p>
+          )}
         </DivTask>
         {/* Tarde */}
         <DivTask>
           <TaskDay title={"Tarde"}>
             <IconClodSun />
           </TaskDay>
-          {taskAfftermoon.map((taskM) => (
-            <TaskItem
-              key={taskM.id}
-              task={taskM}
-              handleCheckBox={handleCheckBox}
-              handleOnDeleteSucess={handleOnDeleteSucess}
-            />
-          ))}
+          {taskAfftermoon.length > 0 ? (
+            taskAfftermoon.map((taskM) => (
+              <TaskItem
+                key={taskM.id}
+                task={taskM}
+                handleCheckBox={handleCheckBox}
+                handleOnDeleteSucess={handleOnDeleteSucess}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-brand-text-gray">
+              Não há tarefas para este período
+            </p>
+          )}
         </DivTask>
         {/* Noite */}
         <DivTask>
           <TaskDay title={"Noite"}>
             <IconMoon />
           </TaskDay>
-          {taskNight.map((taskM) => (
-            <TaskItem
-              key={taskM.id}
-              task={taskM}
-              handleCheckBox={handleCheckBox}
-              handleOnDeleteSucess={handleOnDeleteSucess}
-            />
-          ))}
+          {taskNight.length > 0 ? (
+            taskNight.map((taskM) => (
+              <TaskItem
+                key={taskM.id}
+                task={taskM}
+                handleCheckBox={handleCheckBox}
+                handleOnDeleteSucess={handleOnDeleteSucess}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-brand-text-gray">
+              Não há tarefas para este período
+            </p>
+          )}
         </DivTask>
       </div>
     </div>

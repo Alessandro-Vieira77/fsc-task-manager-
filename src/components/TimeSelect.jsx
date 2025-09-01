@@ -3,7 +3,6 @@ import { forwardRef } from "react";
 
 import ErrorMenssage from "./ErrrorMenssage";
 import LabelInput from "./LabelInput";
-
 const TimeSelect = forwardRef(({ error, loading, ...props }, ref) => {
   return (
     <div className="flex w-full flex-col">
@@ -16,7 +15,7 @@ const TimeSelect = forwardRef(({ error, loading, ...props }, ref) => {
         name="time"
         id="time"
         disabled={loading}>
-        <option defaultValue={"selected"}>Selecione</option>
+        <option value={"selected"}>Selecione</option>
         <option value="morning">Manhã</option>
         <option value="afternoon">Tarde</option>
         <option value="night">Noite</option>

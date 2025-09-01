@@ -1,30 +1,37 @@
 {
   "tasks": [
     {
-      "id": "cb98c06d-d779-4da7-a734-406e91dd058c",
-      "title": "estudar já javaScript ",
-      "description": "arrows",
-      "time": "night",
-      "status": "not_started"
-    },
-    {
       "id": "77a87ad1-50e3-47a2-bd64-e4daf1e9dbfb",
-      "title": "estudar Code Start ",
+      "title": "estudar Code Start :)",
       "description": "Na FSC",
+      "time": "select",
+      "status": "not_started"
+    },
+    {
+      "id": "0474a522-5ab4-4f32-ba18-c05755ebaa28",
+      "title": "Display acer nitro 5",
+      "description": "colocar display no notebook",
+      "time": "afternoon",
+      "status": "not_started"
+    },
+    {
+      "id": "dc48cab3-ff06-4feb-8c46-a9a556dccd56",
+      "title": "Hooks forms :(",
+      "description": "zod...4",
       "time": "night",
       "status": "not_started"
     },
     {
-      "id": "7c05dd51-0b4d-4020-aba1-73093d2bc164",
-      "title": "Comer bolo",
-      "description": "um bolo de laranja no domingo ",
+      "id": "b11a0e09-92a9-4025-aa4e-78abc7ed982b",
+      "title": "teste",
+      "description": "teste....",
       "time": "morning",
       "status": "not_started"
     },
     {
-      "id": "c33df8df-c49e-4e13-b0e1-7d3d8ec07624",
-      "title": "Estudar ES3",
-      "description": "AWS",
+      "id": "a3549a50-e10d-4ca1-92e2-ee8ebe3cc220",
+      "title": "teste 2",
+      "description": "teste 2 testatndo... ",
       "time": "night",
       "status": "not_started"
     }

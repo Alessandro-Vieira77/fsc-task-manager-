@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { IconArrowLeft, IconChevronRight, IconTrash } from "../assets/icons";
@@ -132,11 +132,9 @@ const DetailsTasks = () => {
           </div>
 
           <div className="flex items-center gap-2 text-xs text-brand-text-gray">
-            <span
-              onClick={() => navigate(-1)}
-              className="flex cursor-pointer items-center gap-2">
+            <Link to={"/"} className="flex cursor-pointer items-center gap-2">
               Minhas tarefas <IconChevronRight />{" "}
-            </span>
+            </Link>
             <p className="font-semibold text-brand-primary">{tasks?.title}</p>
           </div>
 

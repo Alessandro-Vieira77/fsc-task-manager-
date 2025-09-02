@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -13,17 +14,18 @@ import TimeSelect from "../components/TimeSelect";
 
 const DetailsTasks = () => {
   const navigate = useNavigate();
-
   const { taskId } = useParams();
   const [tasks, setTasks] = useState([]);
-  const [errors, setErrors] = useState([]);
   const [select, setSelect] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-  const titleRef = useRef(null);
-  const selectRef = useRef(null);
-  const descriptionRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formErrors, isSubmitting },
+  } = useForm();
 
   useEffect(() => {
     async function getTask() {
@@ -33,10 +35,11 @@ const DetailsTasks = () => {
 
       const data = await response.json();
       setTasks(data);
+      reset(data);
     }
 
     getTask();
-  }, [taskId]);
+  }, [taskId, reset]);
 
   if (!tasks) {
     return <div>Carregando...</div>;
@@ -60,43 +63,13 @@ const DetailsTasks = () => {
     }
   };
 
-  const handleUpdateTask = async () => {
-    setLoadingUpdate(true);
-    let newErros = [];
-
-    if (!titleRef.current.value.trim()) {
-      newErros.push({
-        inputName: "title",
-        description: "O campo name é obrigatório",
-      });
-    }
-
-    if (selectRef.current.value === "selected") {
-      newErros.push({
-        inputName: "time",
-        description: "O campo hórario é obrigatório",
-      });
-    }
-
-    if (!descriptionRef.current.value.trim()) {
-      newErros.push({
-        inputName: "description",
-        description: "O campo descrição é obrigatório",
-      });
-    }
-
-    setErrors(newErros);
-
-    if (newErros.length > 0) {
-      return;
-    }
-
+  const handleUpdateTask = async (data) => {
     const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
       method: "PATCH",
       body: JSON.stringify({
-        title: titleRef.current?.value,
-        time: selectRef.current?.value,
-        description: descriptionRef.current?.value,
+        title: data?.title.trim(),
+        description: data?.description.trim(),
+        time: data?.time?.trim(),
       }),
     });
 
@@ -104,21 +77,13 @@ const DetailsTasks = () => {
       const newTask = await response.json();
       setTasks(newTask);
       toast.success("Tarefa atualizada com sucesso!");
-      setLoadingUpdate(false);
     }
 
     if (!response.ok) {
-      setLoadingUpdate(false);
       toast.error("Erro ao atualizar a tarefa!");
       throw new Error("erro ao atualizar a tarefa ");
     }
   };
-
-  const titleErrors = errors.find((erro) => erro.inputName === "title");
-  const timeErrors = errors.find((erro) => erro.inputName === "time");
-  const descriptionErrors = errors.find(
-    (erro) => erro.inputName === "description",
-  );
 
   return (
     <div className="flex w-full">
@@ -153,49 +118,102 @@ const DetailsTasks = () => {
           </div>
         </div>
 
-        <div className="w-full space-y-6 rounded-md bg-brand-white p-6">
+        <form
+          onSubmit={handleSubmit(handleUpdateTask)}
+          className="w-full space-y-6 rounded-md bg-brand-white p-6">
           <Input
             title="Título"
-            defaultValue={tasks?.title}
-            ref={titleRef}
-            error={titleErrors?.description}
+            {...register("title", {
+              validate: (value) => {
+                if (!value.trim()) {
+                  return "Campo não pode está vazio";
+                }
+                return true;
+              },
+              minLength: {
+                value: 3,
+                message: "Mínimo 3 caracteres",
+              },
+              required: {
+                value: true,
+                message: "Campo obrigatório",
+              },
+            })}
+            error={formErrors?.title?.message}
           />
           <div onClick={() => setSelect(true)}>
             {select ? (
               <TimeSelect
                 label="Hórario"
-                defaultValue={tasks?.time}
-                ref={selectRef}
-                error={timeErrors?.description}
+                {...register("time", {
+                  validate: (value) => {
+                    if (value === "selected") {
+                      return "Campo obrigatório";
+                    }
+                  },
+                })}
+                error={formErrors?.time?.message}
               />
             ) : (
               <TimeSelect
                 label="Hórario"
-                value={tasks?.time}
-                ref={selectRef}
-                error={timeErrors?.description}
+                {...register("time", {
+                  validate: (value) => {
+                    if (value === "selected") {
+                      return "Campo obrigatório";
+                    }
+
+                    if (!value.trim()) {
+                      return "Campo não pode está vazio";
+                    }
+
+                    return true;
+                  },
+                })}
+                error={formErrors?.time?.message}
               />
             )}
           </div>
           <Input
             title="Descrição"
-            defaultValue={tasks?.description}
-            ref={descriptionRef}
-            error={descriptionErrors?.description}
+            {...register("description", {
+              validate: (value) => {
+                if (!value.trim()) {
+                  return "Campo não pode está vazio";
+                }
+                return true;
+              },
+              minLength: {
+                value: 3,
+                message: "Mínimo 3 caracteres",
+              },
+              required: {
+                value: true,
+                message: "Campo obrigatório",
+                validate: (value) => {
+                  if (!value.trim()) {
+                    return "Campo não pode está vazio";
+                  }
+
+                  return true;
+                },
+              },
+            })}
+            error={formErrors?.description?.message}
           />
-        </div>
-        <div className="flex w-full justify-end gap-2">
-          <Button
-            onClick={handleUpdateTask}
-            color={"primary"}
-            size={"large"}
-            disabled={loadingUpdate}>
-            {loadingUpdate && (
-              <IconLoader className="animate-spin text-brand-white" />
-            )}
-            {loadingUpdate ? "Atualizando..." : "Atualizar Tarefa"}
-          </Button>
-        </div>
+          <div className="flex w-full justify-end gap-2">
+            <Button
+              color={"primary"}
+              size={"large"}
+              type="submit"
+              disabled={loadingUpdate}>
+              {isSubmitting && (
+                <IconLoader className="animate-spin text-brand-white" />
+              )}
+              {isSubmitting ? "Atualizando..." : "Atualizar Tarefa"}
+            </Button>
+          </div>
+        </form>
       </div>
     </div>
   );

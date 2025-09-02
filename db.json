@@ -8,23 +8,37 @@
       "status": "not_started"
     },
     {
-      "id": "0474a522-5ab4-4f32-ba18-c05755ebaa28",
-      "title": "Display acer nitro 5",
-      "description": "colocar display no notebook",
-      "time": "afternoon",
-      "status": "not_started"
-    },
-    {
       "id": "dc48cab3-ff06-4feb-8c46-a9a556dccd56",
-      "title": "Hooks forms :(",
+      "title": "Hooks forms :) blz ",
       "description": "zod...4",
       "time": "morning",
       "status": "not_started"
     },
     {
-      "id": "a3549a50-e10d-4ca1-92e2-ee8ebe3cc220",
-      "title": "teste 2",
-      "description": "teste 2 testatndo... ",
+      "id": "b62bb769-ece1-406f-b21e-ae97da65fe6a",
+      "title": "estudar nodejs",
+      "description": "import from  and export default",
+      "time": "afternoon",
+      "status": "not_started"
+    },
+    {
+      "id": "a4eb8b0e-523f-4e07-a223-5c1d1e7b1f8b",
+      "title": "Jogar bola",
+      "description": "Jogar bola no sábado",
+      "time": "night",
+      "status": "not_started"
+    },
+    {
+      "id": "52f5dcbf-c661-4745-a860-71f7abd3ea2d",
+      "title": "dada",
+      "description": "ads a dsad",
+      "time": "afternoon",
+      "status": "not_started"
+    },
+    {
+      "id": "224ac473-9c81-4d61-876e-e33e7714696b",
+      "title": "teste 10",
+      "description": "teste 10",
       "time": "afternoon",
       "status": "not_started"
     }

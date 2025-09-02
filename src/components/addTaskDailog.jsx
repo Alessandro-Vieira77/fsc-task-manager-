@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-no-undef */
 import "./addTaskDailog.css";
 
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useForm } from "react-hook-form";
 import { CSSTransition } from "react-transition-group";
 import { v4 } from "uuid";
 
@@ -11,58 +11,49 @@ import { IconLoader } from "../assets/icons";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
-const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks, loading }) => {
-  const [errors, setErrors] = useState([]);
+const AddTaskDailog = ({
+  isOpen,
+  handleClose,
+  handleAddTasks,
+  tasks,
+  loading,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors: formErrors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      description: "",
+      time: "selected",
+    },
+  });
 
   const nodeRef = useRef(null);
-  const titleRef = useRef(null);
-  const selectRef = useRef(null);
-  const descriptionRef = useRef(null);
 
-  function handleSaveTasks() {
-    let newErros = [];
-
-    if (!titleRef.current.value.trim()) {
-      newErros.push({
-        inputName: "title",
-        description: "O campo name é obrigatório",
-      });
-    }
-
-    if (selectRef.current.value === "Selecione") {
-      newErros.push({
-        inputName: "time",
-        description: "O campo hórario é obrigatório",
-      });
-    }
-
-    if (!descriptionRef.current.value.trim()) {
-      newErros.push({
-        inputName: "description",
-        description: "O campo descrição é obrigatório",
-      });
-    }
-
-    setErrors(newErros);
-
-    if (newErros.length > 0) {
-      return;
-    }
-
+  function handleSaveTasks(data) {
     handleAddTasks({
       id: v4(),
-      title: titleRef.current.value,
-      description: descriptionRef.current.value,
-      time: selectRef.current.value,
+      title: data?.title.trim(),
+      description: data?.description.trim(),
+      time: data?.time.trim(),
       status: "not_started",
     });
+
+    reset(tasks);
   }
 
-  const titleErrors = errors.find((erro) => erro.inputName === "title");
-  const timeErrors = errors.find((erro) => erro.inputName === "time");
-  const descriptionErrors = errors.find(
-    (erro) => erro.inputName === "description",
-  );
+  function handleCloseDialog() {
+    reset({
+      title: "",
+      description: "",
+      time: "selected",
+    });
+    handleClose();
+  }
+
   return (
     <CSSTransition
       in={isOpen}
@@ -82,54 +73,93 @@ const AddTaskDailog = ({ isOpen, handleClose, handleAddTasks, loading }) => {
               <p className="pb-4 text-sm font-light text-brand-text-gray">
                 Insira as informaçãoes abaixo
               </p>
-              <div className="flex w-full flex-col gap-4">
+              <form
+                onSubmit={handleSubmit(handleSaveTasks)}
+                className="flex w-full flex-col gap-4">
                 <Input
-                  title={"Título"}
+                  title="Título"
                   type="text"
                   id="title"
                   placeholder="Digite seu nome"
-                  error={titleErrors?.description}
-                  ref={titleRef}
-                  disabled={loading}
+                  error={formErrors?.title?.message}
+                  disabled={isSubmitting}
+                  {...register("title", {
+                    validate: (value) => {
+                      if (!value.trim()) {
+                        return "Campo não pode está vazio";
+                      }
+                      return true;
+                    },
+                    required: "Campo obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Mínimo 3 caracteres",
+                    },
+                  })}
                 />
 
                 <TimeSelect
-                  error={timeErrors?.description}
-                  ref={selectRef}
-                  loading={loading}
+                  error={formErrors?.time?.message}
+                  loading={isSubmitting}
+                  {...register("time", {
+                    validate: (value) => {
+                      if (value === "selected") {
+                        return "Campo obrigatório";
+                      }
+                      return true;
+                    },
+                    required: "Campo obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Mínimo 3 caracteres",
+                    },
+                  })}
                 />
 
                 <Input
-                  title={"Descrição"}
+                  title="Descrição"
                   type="text"
                   placeholder="Digite a descrição"
                   id="description"
-                  error={descriptionErrors?.description}
-                  ref={descriptionRef}
-                  disabled={loading}
+                  error={formErrors?.description?.message}
+                  disabled={isSubmitting}
+                  {...register("description", {
+                    validate: (value) => {
+                      if (!value.trim()) {
+                        return "Campo não pode está vazio";
+                      }
+                      return true;
+                    },
+                    required: "Campo obrigatório",
+                    minLength: {
+                      value: 3,
+                      message: "Mínimo 3 caracteres",
+                    },
+                  })}
                 />
-              </div>
-              <div className="flex w-full items-center gap-4 pt-4">
-                <Button
-                  color={"secundary"}
-                  size="large"
-                  width={"full"}
-                  onClick={() => handleClose()}>
-                  Cancelar
-                </Button>
-                <Button
-                  disabled={loading}
-                  color={"primary"}
-                  size="large"
-                  width={"full"}
-                  onClick={() => handleSaveTasks()}>
-                  {loading ? (
-                    <IconLoader className="animate-spin text-brand-white" />
-                  ) : (
-                    "Salvar"
-                  )}
-                </Button>
-              </div>
+
+                <div className="flex w-full items-center gap-4 pt-4">
+                  <Button
+                    color={"secundary"}
+                    size="large"
+                    width={"full"}
+                    type="button"
+                    onClick={() => handleCloseDialog()}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    color={"primary"}
+                    size="large"
+                    width={"full"}
+                    disabled={isSubmitting}
+                    type="submit">
+                    {loading && (
+                      <IconLoader className="animate-spin text-brand-white" />
+                    )}
+                    {loading ? "Salvando..." : "Salvar"}
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>,
           document.body,

@@ -119,6 +119,7 @@ const Tasks = () => {
             handleClose={() => setaddDailogTaksOpen(false)}
             handleAddTasks={handleAddTasks}
             loading={loadingDelete}
+            tasks={tasks}
           />
         </div>
       </div>

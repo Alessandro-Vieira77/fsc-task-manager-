@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
@@ -15,74 +16,96 @@ import TimeSelect from "../components/TimeSelect";
 const DetailsTasks = () => {
   const navigate = useNavigate();
   const { taskId } = useParams();
-  const [tasks, setTasks] = useState([]);
+
   const [select, setSelect] = useState(false);
-  const [loadingDelete, setLoadingDelete] = useState(false);
-  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { errors: formErrors },
   } = useForm();
 
-  useEffect(() => {
-    async function getTask() {
+  // get
+  const queryClient = useQueryClient();
+  const { data: tasksDatail } = useQuery({
+    queryKey: ["tasksId", taskId],
+    queryFn: async () => {
+      const response = await fetch("http://localhost:3000/tasks");
+
+      return await response.json();
+    },
+  });
+
+  const tasks = tasksDatail?.find((task) => {
+    return task.id === taskId;
+  });
+
+  // update
+  const updateTask = useMutation({
+    mutationKey: ["updateTask"],
+    mutationFn: async (data) => {
       const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "GET",
+        method: "PATCH",
+        body: JSON.stringify({
+          title: data?.title.trim(),
+          description: data?.description.trim(),
+          time: data?.time?.trim(),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
-      const data = await response.json();
-      setTasks(data);
-      reset(data);
-    }
-
-    getTask();
-  }, [taskId, reset]);
-
-  if (!tasks) {
-    return <div>Carregando...</div>;
-  }
+      return response.json();
+    },
+  });
+  // delete
+  const deleteTask = useMutation({
+    mutationKey: ["deleteTask"],
+    mutationFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
+        method: "DELETE",
+      });
+      return response;
+    },
+  });
 
   const handleDeleteTask = async () => {
-    setLoadingDelete(true);
-    const respoonse = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: "DELETE",
+    deleteTask.mutate(undefined, {
+      onSuccess: () => {
+        navigate("/");
+        toast.success("Tarefa deletada com sucesso!");
+        // queryClient.invalidateQueries({ queryKey: ["tasksId", taskId] });
+        queryClient.setQueryData(["tasks"], (oldValue) => {
+          return oldValue.filter((task) => task.id !== taskId);
+        });
+      },
+      onError: (err) => {
+        toast.error("Erro ao deletar a tarefa!");
+        throw new Error("Erro ao deletar a tarefa!", err);
+      },
     });
-
-    if (respoonse.ok) {
-      setLoadingDelete(false);
-      navigate("/");
-      toast.success("Tarefa deletada com sucesso!");
-    }
-    if (!respoonse.ok) {
-      setLoadingDelete(false);
-      toast.error("Erro ao deletar a tarefa!");
-      throw new Error("erro ao deltar a tarefa ");
-    }
   };
 
   const handleUpdateTask = async (data) => {
-    const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        title: data?.title.trim(),
-        description: data?.description.trim(),
-        time: data?.time?.trim(),
-      }),
+    updateTask.mutate(data, {
+      onSuccess: () => {
+        toast.success("Tarefa atualizada com sucesso!");
+        queryClient.invalidateQueries({ queryKey: ["tasksId", taskId] });
+        queryClient.setQueryData(["tasks"], (oldValue) => {
+          return oldValue.map((task) => {
+            if (task.id !== taskId) {
+              return task;
+            }
+            return { ...task, ...data };
+          });
+        });
+      },
+      onError: () => {
+        toast.error("Erro ao atualizar a tarefa!");
+        throw new Error("Erro ao atualizar a tarefa!");
+      },
     });
-
-    if (response.ok) {
-      const newTask = await response.json();
-      setTasks(newTask);
-      toast.success("Tarefa atualizada com sucesso!");
-    }
-
-    if (!response.ok) {
-      toast.error("Erro ao atualizar a tarefa!");
-      throw new Error("erro ao atualizar a tarefa ");
-    }
   };
 
   return (
@@ -108,12 +131,12 @@ const DetailsTasks = () => {
               {tasks?.title}
             </h1>
             <Button onClick={handleDeleteTask} color="danger">
-              {loadingDelete ? (
+              {deleteTask.isPending ? (
                 <IconLoader className="animate-spin text-brand-white" />
               ) : (
                 <IconTrash />
               )}
-              {loadingDelete ? "Deletando..." : "Deletar Tarefa"}
+              {deleteTask.isPending ? "Deletando..." : "Deletar Tarefa"}
             </Button>
           </div>
         </div>
@@ -123,6 +146,7 @@ const DetailsTasks = () => {
           className="w-full space-y-6 rounded-md bg-brand-white p-6">
           <Input
             title="Título"
+            defaultValue={tasks?.title}
             {...register("title", {
               validate: (value) => {
                 if (!value.trim()) {
@@ -144,6 +168,7 @@ const DetailsTasks = () => {
           <div onClick={() => setSelect(true)}>
             {select ? (
               <TimeSelect
+                defaultValue={tasks?.time}
                 label="Hórario"
                 {...register("time", {
                   validate: (value) => {
@@ -156,6 +181,7 @@ const DetailsTasks = () => {
               />
             ) : (
               <TimeSelect
+                value={tasks?.time}
                 label="Hórario"
                 {...register("time", {
                   validate: (value) => {
@@ -175,6 +201,7 @@ const DetailsTasks = () => {
             )}
           </div>
           <Input
+            defaultValue={tasks?.description}
             title="Descrição"
             {...register("description", {
               validate: (value) => {
@@ -206,11 +233,11 @@ const DetailsTasks = () => {
               color={"primary"}
               size={"large"}
               type="submit"
-              disabled={loadingUpdate}>
-              {isSubmitting && (
+              disabled={updateTask.isPending}>
+              {updateTask.isPending && (
                 <IconLoader className="animate-spin text-brand-white" />
               )}
-              {isSubmitting ? "Atualizando..." : "Atualizar Tarefa"}
+              {updateTask.isPending ? "Atualizando..." : "Atualizar Tarefa"}
             </Button>
           </div>
         </form>

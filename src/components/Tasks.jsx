@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 import {
@@ -15,79 +16,71 @@ import DivTask from "./DivTask";
 import TaskItem from "./TaskItem";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
   const [loadingDelete, setLoadingDelete] = useState(false);
 
-  const taskMorning = tasks.filter((task) => task.time === "morning");
-  const taskAfftermoon = tasks.filter((task) => task.time === "afternoon");
-  const taskNight = tasks.filter((task) => task.time === "night");
+  const queryClient = useQueryClient();
+  const {
+    data: tasks,
+    refetch,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const response = await fetch("http://localhost:3000/tasks");
+      const task = await response.json();
+      return task;
+    },
+  });
 
-  useEffect(() => {
-    async function getTasks() {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "GET",
-      });
-
-      const data = await response.json();
-      setTasks(data);
-    }
-
-    getTasks();
-  }, []);
+  const taskMorning = tasks?.filter((task) => task?.time === "morning");
+  const taskAfftermoon = tasks?.filter((task) => task?.time === "afternoon");
+  const taskNight = tasks?.filter((task) => task?.time === "night");
 
   function handleCheckBox(taskId) {
-    const checkBox = tasks.map((task) => {
+    tasks?.map((task) => {
       if (task.id !== taskId) {
         return task;
       }
 
       if (task.status === "done") {
         toast.success("Task reniciada!");
-        return { ...task, status: "not_started" };
+        queryClient.setQueryData(["tasks"], (currentValues) => {
+          return currentValues.map((task) => {
+            if (task.id !== taskId) {
+              return task;
+            }
+            return { ...task, status: "not_started" };
+          });
+        });
       }
 
       if (task.status === "not_started") {
         toast.success("Task em progresso!");
 
-        return { ...task, status: "in_progress" };
+        queryClient.setQueryData(["tasks"], (currentValues) => {
+          return currentValues.map((task) => {
+            if (task.id !== taskId) {
+              return task;
+            }
+            return { ...task, status: "in_progress" };
+          });
+        });
       }
 
       if (task.status === "in_progress") {
         toast.success("Task concluída!");
 
-        return { ...task, status: "done" };
+        queryClient.setQueryData(["tasks"], (currentValues) => {
+          return currentValues.map((task) => {
+            if (task.id !== taskId) {
+              return task;
+            }
+            return { ...task, status: "done" };
+          });
+        });
       }
-
-      setTasks(handleCheckBox);
     });
-
-    setTasks(checkBox);
-  }
-
-  function handleOnDeleteSucess(taskId) {
-    const deliteTask = tasks.filter((task) => {
-      return taskId !== task.id;
-    });
-    setTasks(deliteTask);
-    toast.success("Task deletada com sucesso!");
-  }
-
-  async function handleAddTasks(task) {
-    setLoadingDelete(true);
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      body: JSON.stringify(task),
-    });
-
-    if (!response.ok) {
-      setLoadingDelete(false);
-      return toast.error("Erro ao salvar a tarefa, tente novamente.");
-    }
-    setTasks([...tasks, task]);
-    toast.success("Nova tarefa adicionada!");
-    setLoadingDelete(false);
-    setaddDailogTaksOpen(false);
   }
 
   return (
@@ -117,8 +110,6 @@ const Tasks = () => {
           <AddTaskDailog
             isOpen={addDailogTaksOpen}
             handleClose={() => setaddDailogTaksOpen(false)}
-            handleAddTasks={handleAddTasks}
-            loading={loadingDelete}
             tasks={tasks}
           />
         </div>
@@ -129,13 +120,12 @@ const Tasks = () => {
           <TaskDay title="Manhã">
             <IconSun />
           </TaskDay>
-          {taskMorning.length > 0 ? (
-            taskMorning.map((taskM) => (
+          {taskMorning?.length > 0 ? (
+            taskMorning?.map((taskM) => (
               <TaskItem
                 key={taskM.id}
                 task={taskM}
                 handleCheckBox={handleCheckBox}
-                handleOnDeleteSucess={handleOnDeleteSucess}
               />
             ))
           ) : (
@@ -149,13 +139,12 @@ const Tasks = () => {
           <TaskDay title={"Tarde"}>
             <IconClodSun />
           </TaskDay>
-          {taskAfftermoon.length > 0 ? (
-            taskAfftermoon.map((taskM) => (
+          {taskAfftermoon?.length > 0 ? (
+            taskAfftermoon?.map((taskM) => (
               <TaskItem
                 key={taskM.id}
                 task={taskM}
                 handleCheckBox={handleCheckBox}
-                handleOnDeleteSucess={handleOnDeleteSucess}
               />
             ))
           ) : (
@@ -169,13 +158,12 @@ const Tasks = () => {
           <TaskDay title={"Noite"}>
             <IconMoon />
           </TaskDay>
-          {taskNight.length > 0 ? (
-            taskNight.map((taskM) => (
+          {taskNight?.length > 0 ? (
+            taskNight?.map((taskM) => (
               <TaskItem
                 key={taskM.id}
                 task={taskM}
                 handleCheckBox={handleCheckBox}
-                handleOnDeleteSucess={handleOnDeleteSucess}
               />
             ))
           ) : (

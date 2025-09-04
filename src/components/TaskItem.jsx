@@ -1,25 +1,34 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import Button from "./Button";
-const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
-  const [loadingDelete, setLoadingDelete] = useState(false);
+const TaskItem = ({ task, handleCheckBox }) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["deleteTask", task.id],
+    mutationFn: async () => {
+      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+        method: "DELETE",
+      });
+      return response.json();
+    },
+  });
 
   const onDeleteClick = async () => {
-    setLoadingDelete(true);
-    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-      method: "DELETE",
+    mutate(undefined, {
+      onSuccess: () => {
+        queryClient.setQueryData(["tasks"], (currentValues) => {
+          return currentValues.filter((taskValue) => taskValue.id !== task.id);
+        });
+        toast.success("Tarefa deletada com sucesso");
+      },
+      onError: () => {
+        toast.error("Erro ao deletar tarefa");
+      },
     });
-
-    if (!response.ok) {
-      setLoadingDelete(false);
-      return toast.error("Erro ao deletar a tarefa");
-    }
-    handleOnDeleteSucess(task.id);
-    setLoadingDelete(false);
   };
 
   function getStatusClasses() {
@@ -55,20 +64,17 @@ const TaskItem = ({ task, handleCheckBox, handleOnDeleteSucess }) => {
           {task.status === "in_progress" && (
             <IconLoader className="animate-spin text-brand-white" />
           )}
-          {/* {task.status === "not_started" && (
-            <IconDetail className="bg-brand-text-gray" />
-          )} */}
         </label>
         {task.title}
       </div>
       <div className="flex items-center gap-1 text-brand-text-gray">
         <Button
           color="ghost"
-          disabled={loadingDelete}
+          disabled={isPending}
           onClick={() => {
             onDeleteClick(task.id);
           }}>
-          {loadingDelete ? (
+          {isPending ? (
             <IconLoader className="animate-spin text-brand-process" />
           ) : (
             <IconTrash />

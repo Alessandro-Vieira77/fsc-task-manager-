@@ -1,9 +1,11 @@
 import "./addTaskDailog.css";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import PropTypes, { func } from "prop-types";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { CSSTransition } from "react-transition-group";
 import { v4 } from "uuid";
 
@@ -11,13 +13,30 @@ import { IconLoader } from "../assets/icons";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
-const AddTaskDailog = ({
-  isOpen,
-  handleClose,
-  handleAddTasks,
-  tasks,
-  loading,
-}) => {
+
+const AddTaskDailog = ({ isOpen, handleClose, tasks }) => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["addTask", tasks?.id],
+    mutationFn: async (data) => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify({
+          id: v4(),
+          title: data?.title.trim(),
+          description: data?.description.trim(),
+          time: data?.time.trim(),
+          status: "not_started",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      return response.json();
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -34,15 +53,18 @@ const AddTaskDailog = ({
   const nodeRef = useRef(null);
 
   function handleSaveTasks(data) {
-    handleAddTasks({
-      id: v4(),
-      title: data?.title.trim(),
-      description: data?.description.trim(),
-      time: data?.time.trim(),
-      status: "not_started",
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Tarefa adicionada!");
+        queryClient.refetchQueries(["tasks"]);
+        handleClose(isPending);
+      },
+      onError: () => {
+        toast.error("Erro ao adicionar tarefa!");
+      },
     });
 
-    reset(tasks);
+    reset({ title: "", description: "", time: "selected" });
   }
 
   function handleCloseDialog() {
@@ -153,10 +175,10 @@ const AddTaskDailog = ({
                     width={"full"}
                     disabled={isSubmitting}
                     type="submit">
-                    {loading && (
+                    {isPending && (
                       <IconLoader className="animate-spin text-brand-white" />
                     )}
-                    {loading ? "Salvando..." : "Salvar"}
+                    {isPending ? "Salvando..." : "Salvar"}
                   </Button>
                 </div>
               </form>
@@ -172,7 +194,6 @@ const AddTaskDailog = ({
 AddTaskDailog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  handleAddTasks: PropTypes.func.isRequired,
 };
 
 export default AddTaskDailog;

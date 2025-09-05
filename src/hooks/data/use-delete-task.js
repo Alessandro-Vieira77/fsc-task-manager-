@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import mutatiosKeys from "../../keys/mutation";
 import api from "../../lib/axios";
+
 function useDeleteTask(taskId) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationKey: ["deleteTask", taskId],
+    mutationKey: mutatiosKeys.delete(taskId),
     mutationFn: async () => {
       const { data: newTasks } = await api.delete(`tasks/${taskId}`);
 

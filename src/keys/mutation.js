@@ -1,0 +1,6 @@
+const mutatiosKeys = {
+  delete: (taskId) => ["deleteTasks", taskId],
+  update: (taskId) => ["updateTasks", taskId],
+  create: (taskId) => ["addTasks", taskId],
+};
+export default mutatiosKeys;

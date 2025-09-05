@@ -44,7 +44,7 @@ const DetailsTasks = () => {
   const handleDeleteTask = async () => {
     deleteTask.mutate(undefined, {
       onSuccess: () => {
-        navigate("/");
+        navigate("/tasks");
         toast.success("Tarefa deletada com sucesso!");
       },
       onError: (err) => {

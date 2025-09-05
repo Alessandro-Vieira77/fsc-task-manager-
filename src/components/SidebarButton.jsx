@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import { tv } from "tailwind-variants";
-const SidebarButton = ({ children, color }) => {
+
+const SidebarButton = ({ children, color, to }) => {
   const button = tv({
     base: "flex items-center gap-1 rounded-lg px-5 py-2",
     variants: {
@@ -15,9 +17,9 @@ const SidebarButton = ({ children, color }) => {
   });
 
   return (
-    <a href="#" className={button({ color: color })}>
+    <Link to={to} className={button({ color: color })}>
       {children}
-    </a>
+    </Link>
   );
 };
 

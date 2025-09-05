@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
@@ -10,6 +10,7 @@ import {
   IconTrash,
 } from "../assets/icons";
 import TaskDay from "../components/TaskDay";
+import useGetTasks from "../hooks/data/use-get-tasks";
 import AddTaskDailog from "./addTaskDailog";
 import Button from "./Button";
 import DivTask from "./DivTask";
@@ -17,21 +18,9 @@ import TaskItem from "./TaskItem";
 
 const Tasks = () => {
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
-  const [loadingDelete, setLoadingDelete] = useState(false);
 
   const queryClient = useQueryClient();
-  const {
-    data: tasks,
-    refetch,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: async () => {
-      const response = await fetch("http://localhost:3000/tasks");
-      const task = await response.json();
-      return task;
-    },
-  });
+  const { data: tasks } = useGetTasks();
 
   const taskMorning = tasks?.filter((task) => task?.time === "morning");
   const taskAfftermoon = tasks?.filter((task) => task?.time === "afternoon");

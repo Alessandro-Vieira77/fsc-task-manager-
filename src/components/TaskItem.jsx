@@ -1,24 +1,17 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
+import useDeleteTask from "../hooks/data/use-delete-task";
 import Button from "./Button";
 const TaskItem = ({ task, handleCheckBox }) => {
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["deleteTask", task.id],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
-        method: "DELETE",
-      });
-      return response.json();
-    },
-  });
+  const { mutate: deleteTask, isPending } = useDeleteTask(task.id);
 
   const onDeleteClick = async () => {
-    mutate(undefined, {
+    deleteTask(undefined, {
       onSuccess: () => {
         queryClient.setQueryData(["tasks"], (currentValues) => {
           return currentValues.filter((taskValue) => taskValue.id !== task.id);

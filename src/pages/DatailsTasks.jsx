@@ -1,6 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
@@ -12,6 +11,9 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import Sidebar from "../components/Sidebar";
 import TimeSelect from "../components/TimeSelect";
+import useDeleteTask from "../hooks/data/use-delete-task";
+import useGetTaskId from "../hooks/data/use-get-taskId";
+import useUpdateTask from "../hooks/data/use-update-task";
 
 const DetailsTasks = () => {
   const navigate = useNavigate();
@@ -22,63 +24,28 @@ const DetailsTasks = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors: formErrors },
   } = useForm();
 
   // get
   const queryClient = useQueryClient();
-  const { data: tasksDatail } = useQuery({
-    queryKey: ["tasksId", taskId],
-    queryFn: async () => {
-      const response = await fetch("http://localhost:3000/tasks");
+  const { data: tasks } = useGetTaskId(taskId);
 
-      return await response.json();
-    },
-  });
+  useEffect(() => {
+    reset(tasks);
+  }, [tasks, reset]);
 
-  const tasks = tasksDatail?.find((task) => {
-    return task.id === taskId;
-  });
-
-  // update
-  const updateTask = useMutation({
-    mutationKey: ["updateTask"],
-    mutationFn: async (data) => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          title: data?.title.trim(),
-          description: data?.description.trim(),
-          time: data?.time?.trim(),
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      return response.json();
-    },
-  });
   // delete
-  const deleteTask = useMutation({
-    mutationKey: ["deleteTask"],
-    mutationFn: async () => {
-      const response = await fetch(`http://localhost:3000/tasks/${taskId}`, {
-        method: "DELETE",
-      });
-      return response;
-    },
-  });
+  const deleteTask = useDeleteTask(tasks?.id);
+  // update
+  const updateTask = useUpdateTask(taskId);
 
   const handleDeleteTask = async () => {
     deleteTask.mutate(undefined, {
       onSuccess: () => {
         navigate("/");
         toast.success("Tarefa deletada com sucesso!");
-        // queryClient.invalidateQueries({ queryKey: ["tasksId", taskId] });
-        queryClient.setQueryData(["tasks"], (oldValue) => {
-          return oldValue.filter((task) => task.id !== taskId);
-        });
       },
       onError: (err) => {
         toast.error("Erro ao deletar a tarefa!");
@@ -91,19 +58,11 @@ const DetailsTasks = () => {
     updateTask.mutate(data, {
       onSuccess: () => {
         toast.success("Tarefa atualizada com sucesso!");
-        queryClient.invalidateQueries({ queryKey: ["tasksId", taskId] });
-        queryClient.setQueryData(["tasks"], (oldValue) => {
-          return oldValue.map((task) => {
-            if (task.id !== taskId) {
-              return task;
-            }
-            return { ...task, ...data };
-          });
-        });
+        queryClient.refetchQueries({ queryKey: ["tasks", taskId] });
       },
-      onError: () => {
+      onError: (err) => {
         toast.error("Erro ao atualizar a tarefa!");
-        throw new Error("Erro ao atualizar a tarefa!");
+        throw new Error("Erro ao atualizar a tarefa!", err);
       },
     });
   };
@@ -146,7 +105,6 @@ const DetailsTasks = () => {
           className="w-full space-y-6 rounded-md bg-brand-white p-6">
           <Input
             title="Título"
-            defaultValue={tasks?.title}
             {...register("title", {
               validate: (value) => {
                 if (!value.trim()) {
@@ -168,7 +126,6 @@ const DetailsTasks = () => {
           <div onClick={() => setSelect(true)}>
             {select ? (
               <TimeSelect
-                defaultValue={tasks?.time}
                 label="Hórario"
                 {...register("time", {
                   validate: (value) => {
@@ -181,7 +138,6 @@ const DetailsTasks = () => {
               />
             ) : (
               <TimeSelect
-                value={tasks?.time}
                 label="Hórario"
                 {...register("time", {
                   validate: (value) => {
@@ -201,7 +157,6 @@ const DetailsTasks = () => {
             )}
           </div>
           <Input
-            defaultValue={tasks?.description}
             title="Descrição"
             {...register("description", {
               validate: (value) => {

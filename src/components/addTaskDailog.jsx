@@ -1,41 +1,20 @@
 import "./addTaskDailog.css";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import { useRef } from "react";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { CSSTransition } from "react-transition-group";
-import { v4 } from "uuid";
 
 import { IconLoader } from "../assets/icons";
+import useAddTask from "../hooks/data/use-add-task";
 import Button from "./Button";
 import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
 const AddTaskDailog = ({ isOpen, handleClose, tasks }) => {
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationKey: ["addTask", tasks?.id],
-    mutationFn: async (data) => {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
-        body: JSON.stringify({
-          id: v4(),
-          title: data?.title.trim(),
-          description: data?.description.trim(),
-          time: data?.time.trim(),
-          status: "not_started",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      return response.json();
-    },
-  });
+  const { mutate, isPending } = useAddTask(tasks);
 
   const {
     register,
@@ -56,7 +35,6 @@ const AddTaskDailog = ({ isOpen, handleClose, tasks }) => {
     mutate(data, {
       onSuccess: () => {
         toast.success("Tarefa adicionada!");
-        queryClient.refetchQueries(["tasks"]);
         handleClose(isPending);
       },
       onError: () => {

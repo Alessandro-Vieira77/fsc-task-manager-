@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 function useGetTasks() {
   return useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000/tasks");
-      const task = await response.json();
+      const { data: task } = await axios.get("http://localhost:3000/tasks");
       return task;
     },
   });

@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import { v4 } from "uuid";
 
 function useAddTask(tasks) {
@@ -6,21 +7,16 @@ function useAddTask(tasks) {
   return useMutation({
     mutationKey: ["addTask", tasks?.id],
     mutationFn: async (data) => {
-      const response = await fetch("http://localhost:3000/tasks", {
-        method: "POST",
-        body: JSON.stringify({
+      const { data: addTask } = await axios.post(
+        "http://localhost:3000/tasks",
+        {
           id: v4(),
           title: data?.title.trim(),
           description: data?.description.trim(),
           time: data?.time.trim(),
           status: "not_started",
-        }),
-        headers: {
-          "Content-Type": "application/json",
         },
-      });
-
-      const addTask = response.json();
+      );
       return addTask;
     },
     onSuccess: (tasks) => {

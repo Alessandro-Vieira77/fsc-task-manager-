@@ -5,15 +5,18 @@ import { Link } from "react-router-dom";
 
 import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
 import useDeleteTask from "../hooks/data/use-delete-task";
+import useUpdateTask from "../hooks/data/use-update-task";
+import querykeys from "../keys/querys";
 import Button from "./Button";
-const TaskItem = ({ task, handleCheckBox }) => {
+const TaskItem = ({ task }) => {
   const queryClient = useQueryClient();
   const { mutate: deleteTask, isPending } = useDeleteTask(task.id);
+  const { mutate: updatedTask } = useUpdateTask(task.id);
 
   const onDeleteClick = async () => {
     deleteTask(undefined, {
       onSuccess: () => {
-        queryClient.setQueryData(["tasks"], (currentValues) => {
+        queryClient.setQueryData(querykeys.getTasks(), (currentValues) => {
           return currentValues.filter((taskValue) => taskValue.id !== task.id);
         });
         toast.success("Tarefa deletada com sucesso");
@@ -23,6 +26,33 @@ const TaskItem = ({ task, handleCheckBox }) => {
       },
     });
   };
+
+  function getStatus() {
+    let status;
+    if (task.status === "not_started") {
+      status = "in_progress";
+    }
+    if (task.status === "in_progress") {
+      status = "done";
+    }
+    if (task.status === "done") {
+      status = "not_started";
+    }
+
+    updatedTask(
+      {
+        status: status,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Tarefa atualizada com sucesso");
+        },
+        onError: () => {
+          toast.error("Erro ao atualizar tarefa");
+        },
+      },
+    );
+  }
 
   function getStatusClasses() {
     if (task.status === "done") {
@@ -50,7 +80,7 @@ const TaskItem = ({ task, handleCheckBox }) => {
             className="absolute h-full w-full cursor-pointer opacity-0"
             readOnly
             onClick={() => {
-              handleCheckBox(task.id);
+              getStatus();
             }}
           />
           {task.status === "done" && <IconCheck />}

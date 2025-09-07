@@ -1,0 +1,15 @@
+function DashBoardCard({ icon, title, subTitle }) {
+  return (
+    <div className="flex h-[150px] flex-col items-center justify-center gap-2 rounded-[10px] bg-brand-white">
+      <div className="flex items-center gap-1">
+        <span className="h-6 w-6 text-brand-primary">{icon}</span>
+        <span className="text-3xl font-semibold text-brand-dark-blue">
+          {title}
+        </span>
+      </div>
+      <span>{subTitle}</span>
+    </div>
+  );
+}
+
+export default DashBoardCard;

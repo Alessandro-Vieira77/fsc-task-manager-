@@ -1,6 +1,21 @@
+import { toast } from "react-hot-toast";
+
 import { IconAdd, IconTrash } from "../assets/icons";
+import useDeleteTask from "../hooks/data/use-delete-task";
+import useGetTasks from "../hooks/data/use-get-tasks";
 import Button from "./Button";
 function Header({ title, subTitle, addDailog }) {
+  const { data: tasks } = useGetTasks();
+  const { mutate: deleteTask } = useDeleteTask();
+
+  const handleDeleteTask = async () => {
+    tasks?.map(async (task) => {
+      deleteTask(task.id, {});
+    });
+
+    toast.success("Tarefas deletadas com sucesso");
+  };
+
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-col gap-2">
@@ -12,7 +27,7 @@ function Header({ title, subTitle, addDailog }) {
         </h2>
       </div>
       <div className="flex items-end gap-2">
-        <Button color="ghost">
+        <Button onClick={() => handleDeleteTask()} color="ghost">
           Limpar tarefas
           <IconTrash />
         </Button>

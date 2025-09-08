@@ -7,8 +7,8 @@ function useDeleteTask(taskId) {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: mutatiosKeys.delete(taskId),
-    mutationFn: async () => {
-      const { data: newTasks } = await api.delete(`tasks/${taskId}`);
+    mutationFn: async (id) => {
+      const { data: newTasks } = await api.delete(`tasks/${taskId || id}`);
 
       return newTasks;
     },

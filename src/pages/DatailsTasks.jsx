@@ -37,12 +37,12 @@ const DetailsTasks = () => {
   }, [tasks, reset]);
 
   // delete
-  const deleteTask = useDeleteTask(tasks?.id);
+  const { mutate: deleteTask } = useDeleteTask(tasks?.id);
   // update
-  const updateTask = useUpdateTask(taskId);
+  const { mutate: updateTask } = useUpdateTask(taskId);
 
   const handleDeleteTask = async () => {
-    deleteTask.mutate(undefined, {
+    deleteTask(undefined, {
       onSuccess: () => {
         navigate("/tasks");
         toast.success("Tarefa deletada com sucesso!");
@@ -55,7 +55,7 @@ const DetailsTasks = () => {
   };
 
   const handleUpdateTask = async (data) => {
-    updateTask.mutate(data, {
+    updateTask(data, {
       onSuccess: () => {
         toast.success("Tarefa atualizada com sucesso!");
         queryClient.refetchQueries({ queryKey: ["tasks", taskId] });

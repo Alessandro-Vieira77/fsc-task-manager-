@@ -1,31 +1,34 @@
 {
-  "tasks": [
+  "tasks": [],
+  "water": [
     {
-      "id": "9b74c8e1-89f3-4d6d-879c-3d3fdf9f04c5",
-      "title": "teste 2 :)",
-      "description": "teste 2",
-      "time": "afternoon",
+      "id": "1",
+      "quantity": "500ml",
+      "value": 0.5,
       "status": "not_started"
     },
     {
-      "id": "a08061a6-56db-4a47-8200-b6072c53652d",
-      "title": "teste 3",
-      "description": "teste 3",
-      "time": "night",
+      "id": "2",
+      "quantity": "1 litro",
+      "value": 1,
       "status": "not_started"
     },
     {
-      "id": "3546f407-d0bb-495b-87e4-60cebd73b507",
-      "title": "teste 1",
-      "description": "teste 1",
-      "time": "morning",
+      "id": "3",
+      "quantity": "1,5 litros",
+      "value": 1.5,
       "status": "not_started"
     },
     {
-      "id": "cdfb0c37-8210-4a37-acf7-54b5e86d7916",
-      "title": "teste 4",
-      "description": "teste 4",
-      "time": "afternoon",
+      "id": "4",
+      "quantity": "2 litros",
+      "value": 2,
+      "status": "not_started"
+    },
+    {
+      "id": "5",
+      "quantity": "2,5 litros",
+      "value": 2.5,
       "status": "not_started"
     }
   ]

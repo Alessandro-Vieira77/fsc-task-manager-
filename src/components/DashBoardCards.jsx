@@ -5,6 +5,7 @@ import {
   IconTasks2,
 } from "../assets/icons/index";
 import useGetTasks from "../hooks/data/use-get-tasks";
+import useGetWaterTask from "../hooks/data/use-get-waterTask";
 import DashBoardCard from "./DashboardCard";
 
 function DashBoardCards() {
@@ -15,6 +16,12 @@ function DashBoardCards() {
   const pendingTasks = tasks?.filter(
     (task) => task.status === "in_progress",
   ).length;
+
+  const { data: waterTasks } = useGetWaterTask();
+  const filterWaterTask = waterTasks?.filter(
+    (task) => task.status === "done",
+  ).length;
+
   return (
     <div className="grid w-full grid-cols-4 gap-6">
       <DashBoardCard
@@ -32,7 +39,11 @@ function DashBoardCards() {
         title={pendingTasks}
         subTitle="Tarefas em andamento"
       />
-      <DashBoardCard icon={<IconGlassWater />} title={0} subTitle="Água" />
+      <DashBoardCard
+        icon={<IconGlassWater />}
+        title={filterWaterTask}
+        subTitle="Água"
+      />
     </div>
   );
 }

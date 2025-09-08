@@ -29,44 +29,9 @@
       "status": "in_progress"
     },
     {
-      "id": "44a3cb24-0211-49b2-83de-690f35cfda28",
-      "title": "teste",
-      "description": "zod...4",
-      "time": "afternoon",
-      "status": "done"
-    },
-    {
       "id": "218c443a-152c-4620-bdbd-34064bf00acb",
       "title": "teste 10",
       "description": "teste 10",
-      "time": "morning",
-      "status": "in_progress"
-    },
-    {
-      "id": "8df2be9e-5224-4dbf-863f-555e374e5b88",
-      "title": "teste 4",
-      "description": "teste 4",
-      "time": "afternoon",
-      "status": "done"
-    },
-    {
-      "id": "85f1cfab-b971-4ff3-a20e-f5e7a4716892",
-      "title": "teste 2",
-      "description": "tste 4",
-      "time": "afternoon",
-      "status": "not_started"
-    },
-    {
-      "id": "82523ae8-e44b-499a-a56e-b5e6de55de96",
-      "title": "bola",
-      "description": "bola",
-      "time": "afternoon",
-      "status": "done"
-    },
-    {
-      "id": "5ce11592-1527-4e80-a0e7-87daa0906234",
-      "title": "bola de fogo",
-      "description": "teste 1",
       "time": "morning",
       "status": "done"
     }

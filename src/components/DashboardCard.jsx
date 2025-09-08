@@ -7,7 +7,7 @@ function DashBoardCard({ icon, title, subTitle }) {
           {title}
         </span>
       </div>
-      <span>{subTitle}</span>
+      <span className="text-center text-xs">{subTitle}</span>
     </div>
   );
 }

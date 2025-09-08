@@ -1,25 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-import {
-  IconGlassWater,
-  IconLoader,
-  IconTask,
-  IconTasks2,
-} from "../assets/icons/index";
 import AddTaskDailog from "../components/addTaskDailog";
-import DashBoardCard from "../components/DashboardCard";
+import DashBoardCards from "../components/DashBoardCards";
 import Header from "../components/Header";
 import SideBar from "../components/Sidebar";
+import TaskItem from "../components/TaskItem";
 import useGetTasks from "../hooks/data/use-get-tasks";
 function HomePage() {
   const { data: tasks } = useGetTasks();
-
-  const allTasks = tasks?.length;
-  const completedTasks = tasks?.filter((task) => task.status === "done").length;
-  const pendingTasks = tasks?.filter(
-    (task) => task.status === "in_progress",
-  ).length;
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
@@ -39,28 +27,26 @@ function HomePage() {
         />
 
         <div className="w-full">
-          <div className="grid w-full grid-cols-4 gap-6">
-            <DashBoardCard
-              icon={<IconTasks2 />}
-              title={allTasks}
-              subTitle="Tarefas disponivéis"
-            />
-            <DashBoardCard
-              icon={<IconTask />}
-              title={completedTasks}
-              subTitle="Tarefas concluídas"
-            />
-            <DashBoardCard
-              icon={<IconLoader />}
-              title={pendingTasks}
-              subTitle="Tarefas em andamento"
-            />
-            <DashBoardCard
-              icon={<IconGlassWater />}
-              title={0}
-              subTitle="Água"
-            />
+          <DashBoardCards />
+        </div>
+
+        <div className="flex w-full gap-8">
+          <div className="flex w-full max-w-[648px] flex-col bg-brand-white p-6">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold text-brand-dark-blue">
+                Tarefas
+              </h2>
+              <h3 className="text-sm text-brand-dark-gray">
+                Resumos das tarefas disponíves
+              </h3>
+            </div>
+            <div className="flex w-full flex-col gap-3">
+              {tasks?.map((task) => {
+                return <TaskItem key={task.id} task={task} />;
+              })}
+            </div>
           </div>
+          <div className="h-[408px] w-full bg-brand-white"></div>
         </div>
       </div>
     </div>

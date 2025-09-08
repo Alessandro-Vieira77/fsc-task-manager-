@@ -119,7 +119,6 @@ TaskItem.propTypes = {
     time: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }),
-  handleCheckBox: PropTypes.func.isRequired,
   handleOnDeleteSucess: PropTypes.func,
 };
 

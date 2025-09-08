@@ -23,7 +23,7 @@ function DashBoardCards() {
   ).length;
 
   return (
-    <div className="grid w-full grid-cols-4 gap-6">
+    <div className="grid-span-4 grid w-full gap-6 lg:grid-cols-4">
       <DashBoardCard
         icon={<IconTasks2 />}
         title={allTasks}

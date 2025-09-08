@@ -41,8 +41,8 @@ function HomePage() {
           <DashBoardCards />
         </div>
 
-        <div className="flex w-full gap-8">
-          <div className="flex w-full max-w-[648px] flex-col bg-brand-white p-6">
+        <div className="flex w-full flex-col gap-8 lg:flex-row">
+          <div className="flex w-full flex-col bg-brand-white p-6 lg:max-w-[648px]">
             <div className="mb-6">
               <h2 className="text-xl font-semibold text-brand-dark-blue">
                 Tarefas
@@ -89,7 +89,7 @@ function HomePage() {
                   <span className="flex items-center text-xl font-semibold text-brand-primary">
                     {calculeWater === 0.5 ? `${500}ml` : `${calculeWater}L`}
                     <span className="text-xs font-normal text-brand-dark-gray">
-                      /2,5L
+                      /7,5L
                     </span>
                   </span>
                 </div>

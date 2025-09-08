@@ -17,7 +17,7 @@ function Header({ title, subTitle, addDailog }) {
   };
 
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full flex-col justify-between gap-2 sm:flex-row">
       <div className="flex flex-col gap-2">
         <span className="text-xs font-semibold text-brand-primary">
           {title}

@@ -1,11 +1,19 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "8422efe5-bcec-48e5-b487-71bf4fd568dd",
+      "title": "TESTE 2",
+      "description": "TESTE 2",
+      "time": "morning",
+      "status": "in_progress"
+    }
+  ],
   "water": [
     {
       "id": "1",
       "quantity": "500ml",
       "value": 0.5,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "2",

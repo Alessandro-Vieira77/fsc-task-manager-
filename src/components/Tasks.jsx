@@ -1,3 +1,5 @@
+import "./Menu/MenuStyle.css";
+
 import { useState } from "react";
 
 import { IconClodSun, IconMoon, IconSun } from "../assets/icons";
@@ -6,6 +8,7 @@ import useGetTasks from "../hooks/data/use-get-tasks";
 import AddTaskDailog from "./addTaskDailog";
 import DivTask from "./DivTask";
 import Header from "./Header";
+import SidebarMenu from "./Menu/ButtonMenu";
 import TaskItem from "./TaskItem";
 
 const Tasks = () => {
@@ -18,7 +21,9 @@ const Tasks = () => {
   const taskNight = tasks?.filter((task) => task?.time === "night");
 
   return (
-    <div className="mx-8 w-full space-y-6 py-16">
+    <div className="w-full space-y-6 px-8 py-4 lg:py-16">
+      <SidebarMenu />
+
       <Header
         title="Minhas tarefas"
         subTitle="Minhas Tarefas"

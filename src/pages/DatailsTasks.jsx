@@ -9,7 +9,6 @@ import { IconArrowLeft, IconChevronRight, IconTrash } from "../assets/icons";
 import { IconLoader } from "../assets/icons";
 import Button from "../components/Button";
 import Input from "../components/Input";
-import Sidebar from "../components/Sidebar";
 import TimeSelect from "../components/TimeSelect";
 import useDeleteTask from "../hooks/data/use-delete-task";
 import useGetTaskId from "../hooks/data/use-get-taskId";
@@ -69,7 +68,7 @@ const DetailsTasks = () => {
 
   return (
     <div className="flex w-full">
-      <Sidebar />
+      <div className="hidden lg:flex"></div>
       <div className="mx-8 my-8 flex w-full flex-col gap-6">
         <div className="flex w-full flex-col gap-3">
           <div
@@ -85,7 +84,7 @@ const DetailsTasks = () => {
             <p className="font-semibold text-brand-primary">{tasks?.title}</p>
           </div>
 
-          <div className="flex w-full items-center justify-between">
+          <div className="flex w-full flex-col items-center justify-between gap-3 sm:flex-row">
             <h1 className="text-xl font-bold text-brand-dark-blue">
               {tasks?.title}
             </h1>

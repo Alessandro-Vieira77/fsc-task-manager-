@@ -1,9 +1,12 @@
+import "../components/Menu/MenuStyle.css";
+
 import { useState } from "react";
 
 import AddTaskDailog from "../components/addTaskDailog";
 import DashBoardCards from "../components/DashBoardCards";
 import Header from "../components/Header";
 import ItemWater from "../components/ItemWater";
+import SidebarMenu from "../components/Menu/ButtonMenu";
 import SideBar from "../components/Sidebar";
 import TaskItem from "../components/TaskItem";
 import useGetTasks from "../hooks/data/use-get-tasks";
@@ -23,9 +26,14 @@ function HomePage() {
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
   return (
-    <div className="flex w-full">
-      <SideBar />
-      <div className="mx-8 flex w-full flex-col space-y-6 py-16">
+    <div className="relative flex w-full">
+      <div className="hidden lg:flex">
+        <SideBar />
+      </div>
+
+      <div className="flex w-full flex-col space-y-6 px-8 py-4 lg:py-16">
+        <SidebarMenu />
+
         <Header
           title="Dashboard"
           subTitle="Dashboard"

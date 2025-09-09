@@ -3,7 +3,7 @@ import SidebarButton from "./SidebarButton";
 
 const SideBar = () => {
   return (
-    <div className="flex h-screen w-64 min-w-64 flex-col bg-brand-white">
+    <div className="min=h-screen flex w-64 min-w-64 flex-col bg-brand-white">
       <div className="space-y-4 px-8 pt-6">
         <h1 className="text-xl font-semibold text-brand-primary">
           Task Manager

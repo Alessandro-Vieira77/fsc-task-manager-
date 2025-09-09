@@ -1,27 +1,5 @@
 {
-  "tasks": [
-    {
-      "id": "f31e9f78-bee6-4697-9c14-c36e24f02317",
-      "title": "teste 1 :)",
-      "description": "teste 1",
-      "time": "morning",
-      "status": "in_progress"
-    },
-    {
-      "id": "176eb065-8f82-4b1e-a069-aa139764f4d8",
-      "title": "teste 4",
-      "description": "teste 5",
-      "time": "morning",
-      "status": "done"
-    },
-    {
-      "id": "90f8e4fa-9f01-4f43-888c-96bfce726c7b",
-      "title": "finalizar projeto",
-      "description": "gerenciador de tarefas",
-      "time": "afternoon",
-      "status": "in_progress"
-    }
-  ],
+  "tasks": [],
   "water": [
     {
       "id": "1",
@@ -39,19 +17,19 @@
       "id": "3",
       "quantity": "1,5 litros",
       "value": 1.5,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "4",
       "quantity": "2 litros",
       "value": 2,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "5",
       "quantity": "2,5 litros",
       "value": 2.5,
-      "status": "done"
+      "status": "not_started"
     }
   ]
 }

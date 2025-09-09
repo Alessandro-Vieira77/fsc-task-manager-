@@ -4,7 +4,9 @@ import Tasks from "../components/Tasks";
 function TasksPage() {
   return (
     <div className="flex w-full">
-      <SideBar />
+      <div className="hidden min-h-screen lg:flex">
+        <SideBar />
+      </div>
       <Tasks />
     </div>
   );

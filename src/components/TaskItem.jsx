@@ -71,9 +71,9 @@ const TaskItem = ({ task }) => {
   return (
     <div
       className={`flex items-center justify-between gap-3 rounded-md bg-opacity-10 p-3 text-sm font-semibold transition ${getStatusClasses()}`}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 truncate text-xs sm:text-base">
         <label
-          className={`relative flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg ${getStatusClasses()}`}>
+          className={`relative flex min-h-7 min-w-7 cursor-pointer items-center justify-center rounded-lg ${getStatusClasses()}`}>
           <input
             type="checkbox"
             checked={task.status === "done"}

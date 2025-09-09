@@ -4,6 +4,7 @@ import { IconAdd, IconTrash } from "../assets/icons";
 import useDeleteTask from "../hooks/data/use-delete-task";
 import useGetTasks from "../hooks/data/use-get-tasks";
 import Button from "./Button";
+
 function Header({ title, subTitle, addDailog }) {
   const { data: tasks } = useGetTasks();
   const { mutate: deleteTask } = useDeleteTask();
@@ -26,6 +27,7 @@ function Header({ title, subTitle, addDailog }) {
           {subTitle}
         </h2>
       </div>
+      <div className="flex sm:hidden"></div>
       <div className="flex items-end gap-2">
         <Button onClick={() => handleDeleteTask()} color="ghost">
           Limpar tarefas

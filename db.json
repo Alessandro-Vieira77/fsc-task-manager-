@@ -5,13 +5,13 @@
       "id": "1",
       "quantity": "500ml",
       "value": 0.5,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "2",
       "quantity": "1 litro",
       "value": 1,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "3",

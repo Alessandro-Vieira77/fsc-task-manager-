@@ -16,12 +16,15 @@ function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
 
-  const calculeWater = waterTasks?.reduce((accumulator, currentValue) => {
-    if (currentValue?.status === "done") {
-      return accumulator + currentValue?.value;
-    }
-    return accumulator;
-  }, 0);
+  const calculeWater = (waterTasks ?? []).reduce(
+    (accumulator, currentValue) => {
+      if (currentValue?.status === "done") {
+        return accumulator + currentValue?.value;
+      }
+      return accumulator;
+    },
+    0,
+  );
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 

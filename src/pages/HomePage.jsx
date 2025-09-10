@@ -15,15 +15,14 @@ import useGetWaterTask from "../hooks/data/use-get-waterTask";
 function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
-
-  function calculeWater() {
-    return waterTasks?.reduce((accumulator, currentValue) => {
-      if (currentValue?.status === "done") {
-        return accumulator + currentValue?.value;
-      }
-      return accumulator;
-    }, 0);
-  }
+  // function calculeWater() {
+  //   return waterTasks?.reduce((accumulator, currentValue) => {
+  //     if (currentValue?.status === "done") {
+  //       return accumulator + currentValue?.value;
+  //     }
+  //     return accumulator;
+  //   }, 0);
+  // }
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
@@ -77,7 +76,6 @@ function HomePage() {
           </div>
           <div className="min-h-[408px] w-full bg-brand-white p-6">
             <div className="flex flex-col gap-6">
-              {/* text */}
               <div>
                 <h2 className="text-xl font-semibold text-brand-dark-blue">
                   Água
@@ -86,9 +84,9 @@ function HomePage() {
                   Beba sua meta diária de água
                 </h3>
               </div>
-              {/* ml/L */}
+
               <div className="flex w-full justify-between">
-                <div className="flex w-[130px] flex-col gap-3">
+                {/* <div className="flex w-[130px] flex-col gap-3">
                   {waterTasks?.map((waterTask) => {
                     return (
                       <ItemWater key={waterTask.id} waterTask={waterTask} />
@@ -102,7 +100,7 @@ function HomePage() {
                       /7,5L
                     </span>
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

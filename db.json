@@ -19,25 +19,25 @@
       "id": "2",
       "quantity": "1 litro",
       "value": 1,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "3",
       "quantity": "1,5 litros",
       "value": 1.5,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "4",
       "quantity": "2 litros",
       "value": 2,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "5",
       "quantity": "2,5 litros",
       "value": 2.5,
-      "status": "not_started"
+      "status": "done"
     }
   ]
 }

@@ -1,6 +1,7 @@
 import "../components/Menu/MenuStyle.css";
 
 import { useState } from "react";
+import { useMemo } from "react";
 
 import AddTaskDailog from "../components/addTaskDailog";
 import DashBoardCards from "../components/DashBoardCards";
@@ -15,14 +16,17 @@ import useGetWaterTask from "../hooks/data/use-get-waterTask";
 function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
-  // function calculeWater() {
-  //   return waterTasks?.reduce((accumulator, currentValue) => {
+
+  // const calculeWater = useMemo(() => {
+  //   if (!Array.isArray(waterTasks)) return 0;
+
+  //   return waterTasks.reduce((accumulator, currentValue) => {
   //     if (currentValue?.status === "done") {
-  //       return accumulator + currentValue?.value;
+  //       return accumulator + (currentValue?.value || 0);
   //     }
   //     return accumulator;
   //   }, 0);
-  // }
+  // }, [waterTasks]);
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
@@ -95,7 +99,7 @@ function HomePage() {
                 </div>
                 <div className="flex items-end">
                   <span className="flex items-center text-xl font-semibold text-brand-primary">
-                    {calculeWater() === 0.5 ? `${500}ml` : `${calculeWater()}L`}
+                    {calculeWater === 0.5 ? `${500}ml` : `${calculeWater}L`}
                     <span className="text-xs font-normal text-brand-dark-gray">
                       /7,5L
                     </span>

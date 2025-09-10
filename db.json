@@ -2,10 +2,10 @@
   "tasks": [
     {
       "id": "8422efe5-bcec-48e5-b487-71bf4fd568dd",
-      "title": "TESTE 2",
+      "title": "TESTE 3",
       "description": "TESTE 2",
-      "time": "morning",
-      "status": "not_started"
+      "time": "night",
+      "status": "in_progress"
     }
   ],
   "water": [
@@ -25,19 +25,19 @@
       "id": "3",
       "quantity": "1,5 litros",
       "value": 1.5,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "4",
       "quantity": "2 litros",
       "value": 2,
-      "status": "done"
+      "status": "not_started"
     },
     {
       "id": "5",
       "quantity": "2,5 litros",
       "value": 2.5,
-      "status": "done"
+      "status": "not_started"
     }
   ]
 }

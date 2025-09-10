@@ -3,14 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import querykeys from "../../keys/querys";
 import api from "../../lib/axios";
 
-function useGetWaterTask() {
+function useGetTasks() {
   return useQuery({
-    queryKey: querykeys.getWaterTasks(),
+    queryKey: querykeys.getTasks(),
     queryFn: async () => {
-      const { data: waterTasks } = await api.get("water");
-      return waterTasks;
+      const { data } = await api.get("/water");
+
+      // garante que sempre retorne array
+      return Array.isArray(data) ? data : [];
     },
   });
 }
 
-export default useGetWaterTask;
+export default useGetTasks;

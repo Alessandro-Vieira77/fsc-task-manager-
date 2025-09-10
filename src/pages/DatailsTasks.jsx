@@ -2,8 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { IconArrowLeft, IconChevronRight, IconTrash } from "../assets/icons";
 import { IconLoader } from "../assets/icons";
@@ -36,9 +35,12 @@ const DetailsTasks = () => {
   }, [tasks, reset]);
 
   // delete
-  const { mutate: deleteTask } = useDeleteTask(tasks?.id);
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask(
+    tasks?.id,
+  );
+
   // update
-  const { mutate: updateTask } = useUpdateTask(taskId);
+  const { mutate: updateTask, isPending: isUpdating } = useUpdateTask(taskId);
 
   const handleDeleteTask = async () => {
     deleteTask(undefined, {
@@ -46,9 +48,8 @@ const DetailsTasks = () => {
         navigate("/tasks");
         toast.success("Tarefa deletada com sucesso!");
       },
-      onError: (err) => {
+      onError: () => {
         toast.error("Erro ao deletar a tarefa!");
-        throw new Error("Erro ao deletar a tarefa!", err);
       },
     });
   };
@@ -59,9 +60,8 @@ const DetailsTasks = () => {
         toast.success("Tarefa atualizada com sucesso!");
         queryClient.refetchQueries({ queryKey: ["tasks", taskId] });
       },
-      onError: (err) => {
+      onError: () => {
         toast.error("Erro ao atualizar a tarefa!");
-        throw new Error("Erro ao atualizar a tarefa!", err);
       },
     });
   };
@@ -89,12 +89,12 @@ const DetailsTasks = () => {
               {tasks?.title}
             </h1>
             <Button onClick={handleDeleteTask} color="danger">
-              {deleteTask.isPending ? (
+              {isDeleting ? (
                 <IconLoader className="animate-spin text-brand-white" />
               ) : (
                 <IconTrash />
               )}
-              {deleteTask.isPending ? "Deletando..." : "Deletar Tarefa"}
+              {isDeleting ? "Deletando..." : "Deletar Tarefa"}
             </Button>
           </div>
         </div>
@@ -122,10 +122,11 @@ const DetailsTasks = () => {
             })}
             error={formErrors?.title?.message}
           />
+
           <div onClick={() => setSelect(true)}>
             {select ? (
               <TimeSelect
-                label="Hórario"
+                label="Horário"
                 {...register("time", {
                   validate: (value) => {
                     if (value === "selected") {
@@ -137,17 +138,15 @@ const DetailsTasks = () => {
               />
             ) : (
               <TimeSelect
-                label="Hórario"
+                label="Horário"
                 {...register("time", {
                   validate: (value) => {
                     if (value === "selected") {
                       return "Campo obrigatório";
                     }
-
                     if (!value.trim()) {
                       return "Campo não pode está vazio";
                     }
-
                     return true;
                   },
                 })}
@@ -155,6 +154,7 @@ const DetailsTasks = () => {
               />
             )}
           </div>
+
           <Input
             title="Descrição"
             {...register("description", {
@@ -171,27 +171,21 @@ const DetailsTasks = () => {
               required: {
                 value: true,
                 message: "Campo obrigatório",
-                validate: (value) => {
-                  if (!value.trim()) {
-                    return "Campo não pode está vazio";
-                  }
-
-                  return true;
-                },
               },
             })}
             error={formErrors?.description?.message}
           />
+
           <div className="flex w-full justify-end gap-2">
             <Button
-              color={"primary"}
-              size={"large"}
+              color="primary"
+              size="large"
               type="submit"
-              disabled={updateTask.isPending}>
-              {updateTask.isPending && (
+              disabled={isUpdating}>
+              {isUpdating && (
                 <IconLoader className="animate-spin text-brand-white" />
               )}
-              {updateTask.isPending ? "Atualizando..." : "Atualizar Tarefa"}
+              {isUpdating ? "Atualizando..." : "Atualizar Tarefa"}
             </Button>
           </div>
         </form>

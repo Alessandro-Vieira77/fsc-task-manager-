@@ -5,12 +5,11 @@ import api from "../../lib/axios";
 
 function useGetTasks() {
   return useQuery({
-    queryKey: querykeys.getTasks(),
+    queryKey: querykeys.getWaterTasks(),
     queryFn: async () => {
-      const { data } = await api.get("/water");
+      const { data: waterTasks } = await api.get("/water");
 
-      // garante que sempre retorne array
-      return Array.isArray(data) ? data : [];
+      return waterTasks;
     },
   });
 }

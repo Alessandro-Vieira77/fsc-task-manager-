@@ -17,16 +17,12 @@ function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
 
-  // const calculeWater = useMemo(() => {
-  //   if (!Array.isArray(waterTasks)) return 0;
-
-  //   return waterTasks.reduce((accumulator, currentValue) => {
-  //     if (currentValue?.status === "done") {
-  //       return accumulator + (currentValue?.value || 0);
-  //     }
-  //     return accumulator;
-  //   }, 0);
-  // }, [waterTasks]);
+  const totalWater = waterTasks?.reduce((accumulator, currentValue) => {
+    if (currentValue?.status === "done") {
+      return accumulator + (currentValue?.value || 0);
+    }
+    return accumulator;
+  }, 0);
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
@@ -90,7 +86,7 @@ function HomePage() {
               </div>
 
               <div className="flex w-full justify-between">
-                {/* <div className="flex w-[130px] flex-col gap-3">
+                <div className="flex w-[130px] flex-col gap-3">
                   {waterTasks?.map((waterTask) => {
                     return (
                       <ItemWater key={waterTask.id} waterTask={waterTask} />
@@ -99,12 +95,12 @@ function HomePage() {
                 </div>
                 <div className="flex items-end">
                   <span className="flex items-center text-xl font-semibold text-brand-primary">
-                    {calculeWater === 0.5 ? `${500}ml` : `${calculeWater}L`}
+                    {totalWater === 0.5 ? `${500}ml` : `${totalWater}L`}
                     <span className="text-xs font-normal text-brand-dark-gray">
                       /7,5L
                     </span>
                   </span>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>

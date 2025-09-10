@@ -16,15 +16,15 @@ function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
 
-  // const calculeWater = (waterTasks ?? []).reduce(
-  //   (accumulator, currentValue) => {
-  //     if (currentValue?.status === "done") {
-  //       return accumulator + currentValue?.value;
-  //     }
-  //     return accumulator;
-  //   },
-  //   0,
-  // );
+  const calculeWater = (waterTasks ?? []).reduce(
+    (accumulator, currentValue) => {
+      if (currentValue?.status === "done") {
+        return accumulator + currentValue?.value;
+      }
+      return accumulator;
+    },
+    0,
+  );
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 
@@ -98,7 +98,7 @@ function HomePage() {
                 </div>
                 <div className="flex items-end">
                   <span className="flex items-center text-xl font-semibold text-brand-primary">
-                    {/* {calculeWater === 0.5 ? `${500}ml` : `${calculeWater}L`} */}
+                    {calculeWater === 0.5 ? `${500}ml` : `${calculeWater}L`}
                     <span className="text-xs font-normal text-brand-dark-gray">
                       /7,5L
                     </span>

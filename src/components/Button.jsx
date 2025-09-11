@@ -40,11 +40,11 @@ const Button = ({
   );
 };
 
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  color: PropTypes.oneOf(["primary", "ghost", "secondary", "danger"]),
-  size: PropTypes.oneOf(["small", "large"]),
-  className: PropTypes.string,
-};
+// Button.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   color: PropTypes.oneOf(["primary", "ghost", "secondary", "danger"]),
+//   size: PropTypes.oneOf(["small", "large"]),
+//   className: PropTypes.string,
+// };
 
 export default Button;

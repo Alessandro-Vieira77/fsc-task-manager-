@@ -24,9 +24,9 @@ const SidebarButton = ({ children, to }) => {
   );
 };
 
-SidebarButton.propTypes = {
-  children: PropTypes.node.isRequired,
-  color: PropTypes.oneOf(["selected", "unselected"]),
-};
+// SidebarButton.propTypes = {
+//   children: PropTypes.node.isRequired,
+//   color: PropTypes.oneOf(["selected", "unselected"]),
+// };
 
 export default SidebarButton;

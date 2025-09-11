@@ -19,11 +19,11 @@ const Input = forwardRef(({ label, errorMessage, ...rest }, ref) => {
 });
 
 Input.displayName = "Input";
-Input.propTypes = {
-  id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string,
-  placeholder: PropTypes.string,
-};
+// Input.propTypes = {
+//   id: PropTypes.string.isRequired,
+//   label: PropTypes.string.isRequired,
+//   errorMessage: PropTypes.string,
+//   placeholder: PropTypes.string,
+// };
 
 export default Input;

@@ -36,8 +36,8 @@ function Header({ subtitle, title }) {
   );
 }
 
-Header.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+// Header.propTypes = {
+//   children: PropTypes.node.isRequired,
+// };
 
 export default Header;

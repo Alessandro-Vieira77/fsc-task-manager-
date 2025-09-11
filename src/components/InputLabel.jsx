@@ -8,8 +8,8 @@ const InputLabel = (props) => {
   );
 };
 
-InputLabel.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+// InputLabel.propTypes = {
+//   children: PropTypes.node.isRequired,
+// };
 
 export default InputLabel;

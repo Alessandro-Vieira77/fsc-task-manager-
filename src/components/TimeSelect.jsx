@@ -27,8 +27,8 @@ const TimeSelect = forwardRef((props, ref) => {
 });
 
 TimeSelect.displayName = "TimeSelect";
-TimeSelect.propTypes = {
-  errorMessage: PropTypes.string,
-};
+// TimeSelect.propTypes = {
+//   errorMessage: PropTypes.string,
+// };
 
 export default TimeSelect;

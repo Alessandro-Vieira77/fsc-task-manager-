@@ -14,7 +14,7 @@ import Input from "./Input";
 import TimeSelect from "./TimeSelect";
 
 const AddTaskDailog = ({ isOpen, handleClose, tasks }) => {
-  const { mutate, isPending } = useAddTask(tasks);
+  const { mutate: addTask, isPending } = useAddTask(tasks);
 
   const {
     register,
@@ -32,7 +32,7 @@ const AddTaskDailog = ({ isOpen, handleClose, tasks }) => {
   const nodeRef = useRef(null);
 
   function handleSaveTasks(data) {
-    mutate(data, {
+    addTask(data, {
       onSuccess: () => {
         toast.success("Tarefa adicionada!");
         handleClose(isPending);

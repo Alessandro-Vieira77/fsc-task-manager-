@@ -23,7 +23,6 @@ function useAddTask(tasks) {
         return [...oldData, tasks];
       });
     },
-    initialData: [],
   });
 }
 

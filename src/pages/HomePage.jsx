@@ -11,18 +11,19 @@ import SidebarMenu from "../components/Menu/ButtonMenu";
 import SideBar from "../components/Sidebar";
 import TaskItem from "../components/TaskItem";
 import useGetTasks from "../hooks/data/use-get-tasks";
-import useGetWaterTask from "../hooks/data/use-get-waterTask";
+import useWaterTasks from "../hooks/data/use-get-waterTask";
 
 function HomePage() {
-  const { data: tasks } = useGetTasks();
-  const { data: waterTasks } = useGetWaterTask();
+  const { data: tasks = [] } = useGetTasks();
+  const { data: waterTasks = [] } = useWaterTasks();
 
-  const totalWater = waterTasks.reduce((accumulator, currentValue) => {
-    if (currentValue.status === "done") {
-      return accumulator + (currentValue.value || 0);
-    }
-    return accumulator;
-  }, 0);
+  const totalWater =
+    waterTasks?.reduce((accumulator, currentValue) => {
+      if (currentValue.status === "done") {
+        return accumulator + (currentValue.value || 0);
+      }
+      return accumulator;
+    }, 0) || 0;
 
   const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
 

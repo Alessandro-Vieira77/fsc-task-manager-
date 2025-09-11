@@ -12,6 +12,7 @@ import TimeSelect from "../components/TimeSelect";
 import useDeleteTask from "../hooks/data/use-delete-task";
 import useGetTaskId from "../hooks/data/use-get-taskId";
 import useUpdateTask from "../hooks/data/use-update-task";
+import queryKeys from "../keys/querys";
 
 const DetailsTasks = () => {
   const navigate = useNavigate();
@@ -35,7 +36,9 @@ const DetailsTasks = () => {
   }, [tasks, reset]);
 
   // delete
-  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask(tasks.id);
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask(
+    tasks?.id,
+  );
 
   // update
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask(taskId);
@@ -56,7 +59,9 @@ const DetailsTasks = () => {
     updateTask(data, {
       onSuccess: () => {
         toast.success("Tarefa atualizada com sucesso!");
-        queryClient.refetchQueries({ queryKey: ["tasks", taskId] });
+        queryClient.refetchQueries({
+          queryKey: [queryKeys.getTasks(), taskId],
+        });
       },
       onError: () => {
         toast.error("Erro ao atualizar a tarefa!");

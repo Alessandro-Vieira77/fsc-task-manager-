@@ -26,7 +26,6 @@ function useUpdateTask(taskId) {
 
       return updateTask;
     },
-    initialData: [],
   });
 }
 

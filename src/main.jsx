@@ -6,9 +6,9 @@ import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from "./pages/Home.jsx";
-import TaskDetailsPage from "./pages/TaskDetails.jsx";
-import TasksPage from "./pages/Tasks.jsx";
+import HomePage from "./pages/Home";
+import TaskDetailsPage from "./pages/TaskDetails";
+import TasksPage from "./pages/Tasks";
 
 const queryClient = new QueryClient();
 

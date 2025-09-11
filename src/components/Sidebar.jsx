@@ -1,31 +1,31 @@
-import { IconHome, IconTask } from "../assets/icons";
+import { HomeIcon, TasksIcon } from "../assets/icons";
 import SidebarButton from "./SidebarButton";
 
-const SideBar = () => {
+const Sidebar = () => {
   return (
-    <div className="min=h-screen flex w-64 min-w-64 flex-col bg-brand-white">
-      <div className="space-y-4 px-8 pt-6">
+    <div className="h-screen w-72 min-w-72 bg-white">
+      <div className="space-y-4 px-8 py-6">
         <h1 className="text-xl font-semibold text-brand-primary">
           Task Manager
         </h1>
-        <p className="text-xs">
+        <p>
           Um simples{" "}
-          <span className="text-brand-primary">organizador de tarefas</span>
+          <span className="text-brand-primary">organizador de tarefas</span>.
         </p>
       </div>
 
-      <div className="mt-6 flex flex-col gap-2 p-2">
-        <SidebarButton to={"/"}>
-          <IconHome />
-          Inicio
+      <div className="flex flex-col gap-2 p-2">
+        <SidebarButton to="/">
+          <HomeIcon />
+          Início
         </SidebarButton>
-        <SidebarButton to={"/tasks"}>
-          <IconTask />
-          Minhas tarefas
+        <SidebarButton to="/tasks">
+          <TasksIcon />
+          Minhas Tarefas
         </SidebarButton>
       </div>
     </div>
   );
 };
 
-export default SideBar;
+export default Sidebar;

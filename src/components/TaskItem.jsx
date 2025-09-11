@@ -1,60 +1,19 @@
-import { useQueryClient } from "@tanstack/react-query";
 import PropTypes from "prop-types";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
-import { IconCheck, IconDetail, IconLoader, IconTrash } from "../assets/icons";
-import useDeleteTask from "../hooks/data/use-delete-task";
-import useUpdateTask from "../hooks/data/use-update-task";
-import querykeys from "../keys/querys";
-import Button from "./Button";
+import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons";
+import Button from "../components/Button";
+import { useDeleteTask } from "../hooks/data/use-delete-task";
+import { useUpdateTask } from "../hooks/data/use-update-task";
+
 const TaskItem = ({ task }) => {
-  const queryClient = useQueryClient();
-  const { mutate: deleteTask, isPending } = useDeleteTask(task.id);
-  const { mutate: updatedTask } = useUpdateTask(task.id);
+  const { mutate: deleteTask, isPending: deleteTaskIsLoading } = useDeleteTask(
+    task.id,
+  );
+  const { mutate } = useUpdateTask(task.id);
 
-  const onDeleteClick = async () => {
-    deleteTask(undefined, {
-      onSuccess: () => {
-        queryClient.setQueryData(querykeys.getTasks(), (currentValues) => {
-          return currentValues.filter((taskValue) => taskValue.id !== task.id);
-        });
-        toast.success("Tarefa deletada com sucesso");
-      },
-      onError: () => {
-        toast.error("Erro ao deletar tarefa");
-      },
-    });
-  };
-
-  function getStatus() {
-    let status;
-    if (task.status === "not_started") {
-      status = "in_progress";
-    }
-    if (task.status === "in_progress") {
-      status = "done";
-    }
-    if (task.status === "done") {
-      status = "not_started";
-    }
-
-    updatedTask(
-      {
-        status: status,
-      },
-      {
-        onSuccess: () => {
-          toast.success("Tarefa atualizada com sucesso");
-        },
-        onError: () => {
-          toast.error("Erro ao atualizar tarefa");
-        },
-      },
-    );
-  }
-
-  function getStatusClasses() {
+  const getStatusClasses = () => {
     if (task.status === "done") {
       return "bg-brand-primary text-brand-primary";
     }
@@ -64,47 +23,82 @@ const TaskItem = ({ task }) => {
     }
 
     if (task.status === "not_started") {
-      return "bg-brand-text-gray text-brand-text-gray ";
+      return "bg-brand-dark-blue bg-opacity-5 text-brand-dark-blue";
     }
-  }
+  };
+
+  const handleDeleteClick = () => {
+    deleteTask(undefined, {
+      onSuccess: () => {
+        toast.success("Tarefa excluída com sucesso!");
+      },
+      onError: () => {
+        toast.error("Erro ao excluir tarefa. Por favor, tente novamente.");
+      },
+    });
+  };
+
+  const getNewStatus = () => {
+    if (task.status === "not_started") {
+      return "in_progress";
+    }
+    if (task.status === "in_progress") {
+      return "done";
+    }
+    return "not_started";
+  };
+
+  const handleCheckboxClick = () => {
+    mutate(
+      {
+        status: getNewStatus(),
+      },
+      {
+        onSuccess: () =>
+          toast.success("Status da tarefa atualizado com sucesso!"),
+        onError: () =>
+          toast.error(
+            "Erro ao atualizar status da tarefa. Por favor, tente novamente.",
+          ),
+      },
+    );
+  };
 
   return (
     <div
-      className={`flex items-center justify-between gap-3 rounded-md bg-opacity-10 p-3 text-sm font-semibold transition ${getStatusClasses()}`}>
-      <div className="flex items-center gap-2 truncate text-xs sm:text-base">
+      className={`flex items-center justify-between gap-2 rounded-lg bg-opacity-10 px-4 py-3 text-sm transition ${getStatusClasses()}`}>
+      <div className="flex items-center gap-2">
         <label
-          className={`relative flex min-h-7 min-w-7 cursor-pointer items-center justify-center rounded-lg ${getStatusClasses()}`}>
+          className={`relative flex h-7 w-7 cursor-pointer items-center justify-center rounded-lg ${getStatusClasses()}`}>
           <input
             type="checkbox"
             checked={task.status === "done"}
             className="absolute h-full w-full cursor-pointer opacity-0"
-            readOnly
-            onClick={() => {
-              getStatus();
-            }}
+            onChange={handleCheckboxClick}
           />
-          {task.status === "done" && <IconCheck />}
+          {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (
-            <IconLoader className="animate-spin text-brand-white" />
+            <LoaderIcon className="animate-spin text-brand-white" />
           )}
         </label>
+
         {task.title}
       </div>
-      <div className="flex items-center gap-1 text-brand-text-gray">
+
+      <div className="flex items-center gap-2">
         <Button
           color="ghost"
-          disabled={isPending}
-          onClick={() => {
-            onDeleteClick(task.id);
-          }}>
-          {isPending ? (
-            <IconLoader className="animate-spin text-brand-process" />
+          onClick={handleDeleteClick}
+          disabled={deleteTaskIsLoading}>
+          {deleteTaskIsLoading ? (
+            <LoaderIcon className="animate-spin text-brand-text-gray" />
           ) : (
-            <IconTrash />
+            <TrashIcon className="text-brand-text-gray" />
           )}
         </Button>
-        <Link to={`/details/${task.id}`}>
-          <IconDetail className="transition hover:opacity-75" />
+
+        <Link to={`/task/${task.id}`}>
+          <DetailsIcon />
         </Link>
       </div>
     </div>
@@ -116,10 +110,11 @@ TaskItem.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-  }),
-  handleOnDeleteSucess: PropTypes.func,
+    time: PropTypes.oneOf(["morning", "afternoon", "evening"]).isRequired,
+    status: PropTypes.oneOf(["not_started", "in_progress", "done"]).isRequired,
+  }).isRequired,
+  handleCheckboxClick: PropTypes.func.isRequired,
+  handleDeleteClick: PropTypes.func.isRequired,
 };
 
 export default TaskItem;

@@ -1,51 +1,42 @@
-import {
-  IconGlassWater,
-  IconLoader,
-  IconTask,
-  IconTasks2,
-} from "../assets/icons/index";
-import useGetTasks from "../hooks/data/use-get-tasks";
-import useGetWaterTask from "../hooks/data/use-get-waterTask";
-import DashBoardCard from "./DashboardCard";
+import { LoaderIcon, Tasks2Icon, TasksIcon } from "../assets/icons";
+import { useGetTasks } from "../hooks/data/use-get-tasks";
+import DashboardCard from "./DashboardCard";
 
-function DashBoardCards() {
+const DashboardCards = () => {
   const { data: tasks } = useGetTasks();
 
-  const allTasks = tasks?.length;
-  const completedTasks = tasks?.filter((task) => task.status === "done").length;
-  const pendingTasks = tasks?.filter(
+  const notStartedTasks = tasks?.filter(
+    (task) => task.status === "not_started",
+  ).length;
+  const inProgressTasks = tasks?.filter(
     (task) => task.status === "in_progress",
   ).length;
-
-  const { data: waterTasks } = useGetWaterTask();
-  const filterWaterTask = waterTasks?.filter(
-    (task) => task.status === "done",
-  ).length;
+  const completedTasks = tasks?.filter((task) => task.status === "done").length;
 
   return (
-    <div className="grid-span-4 grid w-full gap-6 lg:grid-cols-4">
-      <DashBoardCard
-        icon={<IconTasks2 />}
-        title={allTasks}
-        subTitle="Tarefas disponivéis"
+    <div className="grid grid-cols-4 gap-9">
+      <DashboardCard
+        icon={<Tasks2Icon />}
+        mainText={tasks?.length}
+        secondaryText="Tarefas totais"
       />
-      <DashBoardCard
-        icon={<IconTask />}
-        title={completedTasks}
-        subTitle="Tarefas concluídas"
+      <DashboardCard
+        icon={<LoaderIcon />}
+        mainText={notStartedTasks}
+        secondaryText="Tarefas não iniciadas"
       />
-      <DashBoardCard
-        icon={<IconLoader />}
-        title={pendingTasks}
-        subTitle="Tarefas em andamento"
+      <DashboardCard
+        icon={<LoaderIcon />}
+        mainText={inProgressTasks}
+        secondaryText="Tarefas em andamento"
       />
-      <DashBoardCard
-        icon={<IconGlassWater />}
-        title={filterWaterTask}
-        subTitle="Água"
+      <DashboardCard
+        icon={<TasksIcon />}
+        mainText={completedTasks}
+        secondaryText="Tarefas concluídas"
       />
     </div>
   );
-}
+};
 
-export default DashBoardCards;
+export default DashboardCards;

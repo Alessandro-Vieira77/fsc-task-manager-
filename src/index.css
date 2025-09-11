@@ -1,5 +1,4 @@
 @tailwind base;
-@tailwind components;
 @tailwind utilities;
 
 @layer base {
@@ -129,11 +128,8 @@
     font-weight: 100;
     font-style: italic;
   }
-  /* body {
-    @apply bg-brand-background;
-  } */
 
   body {
-    @apply bg-[#f8f8f8];
+    @apply bg-brand-background;
   }
 }

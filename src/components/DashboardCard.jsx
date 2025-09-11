@@ -1,15 +1,15 @@
-function DashBoardCard({ icon, title, subTitle }) {
+const DashboardCard = ({ icon, mainText, secondaryText }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-[10px] bg-brand-white py-3 lg:py-10">
-      <div className="flex items-center gap-1">
-        <span className="h-6 w-6 text-brand-primary">{icon}</span>
-        <span className="text-3xl font-semibold text-brand-dark-blue">
-          {title}
-        </span>
+    <div className="flex h-[150px] flex-col items-center justify-center gap-1 rounded-[10px] bg-white">
+      <div className="flex items-center gap-2">
+        <span className="text-brand-primary">{icon}</span>
+        <p className="text-2xl font-semibold text-brand-dark-blue">
+          {mainText}
+        </p>
       </div>
-      <span className="text-center text-xs">{subTitle}</span>
+      {secondaryText}
     </div>
   );
-}
+};
 
-export default DashBoardCard;
+export default DashboardCard;

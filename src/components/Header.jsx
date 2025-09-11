@@ -1,48 +1,43 @@
-import { toast } from "react-hot-toast";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
-import { IconAdd, IconTrash } from "../assets/icons";
-import useDeleteTask from "../hooks/data/use-delete-task";
-import useGetTasks from "../hooks/data/use-get-tasks";
+import { AddIcon, TrashIcon } from "../assets/icons";
+import AddTaskDialog from "./AddTaskDialog";
 import Button from "./Button";
 
-function Header({ title, subTitle, addDailog }) {
-  const { data: tasks } = useGetTasks();
-  const { mutate: deleteTask } = useDeleteTask();
-
-  const handleDeleteTask = async () => {
-    tasks?.map(async (task) => {
-      deleteTask(task.id, {});
-    });
-
-    toast.success("Tarefas deletadas com sucesso");
-  };
-
+function Header({ subtitle, title }) {
+  const [addTaskDialogIsOpen, setAddTaskDialogIsOpen] = useState(false);
   return (
-    <div className="flex w-full flex-col justify-between gap-2 sm:flex-row">
-      <div className="flex flex-col gap-2">
+    <div className="flex w-full justify-between">
+      <div>
         <span className="text-xs font-semibold text-brand-primary">
-          {title}
+          {subtitle}
         </span>
-        <h2 className="text-xl font-semibold text-brand-dark-blue">
-          {subTitle}
-        </h2>
+        <h2 className="text-xl font-semibold">{title}</h2>
       </div>
-      <div className="flex sm:hidden"></div>
-      <div className="flex items-end gap-2">
-        <Button onClick={() => handleDeleteTask()} color="ghost">
+
+      <div className="flex items-center gap-3">
+        <Button color="ghost">
           Limpar tarefas
-          <IconTrash />
+          <TrashIcon />
         </Button>
-        <Button
-          color={"primary"}
-          onClick={() => {
-            addDailog(true);
-          }}>
-          Nova Tarefa
-          <IconAdd />
+
+        <Button onClick={() => setAddTaskDialogIsOpen(true)}>
+          <AddIcon />
+          Nova tarefa
         </Button>
+
+        <AddTaskDialog
+          isOpen={addTaskDialogIsOpen}
+          handleClose={() => setAddTaskDialogIsOpen(false)}
+        />
       </div>
     </div>
   );
 }
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export default Header;

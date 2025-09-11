@@ -6,9 +6,9 @@ import ReactDOM from "react-dom/client";
 import { Toaster } from "react-hot-toast";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import DetailsTasks from "./pages/DatailsTasks";
-import HomePage from "./pages/HomePage";
-import TasksPage from "./pages/TasksPage";
+import HomePage from "./pages/Home.jsx";
+import TaskDetailsPage from "./pages/TaskDetails.jsx";
+import TasksPage from "./pages/Tasks.jsx";
 
 const queryClient = new QueryClient();
 
@@ -22,15 +22,21 @@ const router = createBrowserRouter([
     element: <TasksPage />,
   },
   {
-    path: "/details/:taskId",
-    element: <DetailsTasks />,
+    path: "/task/:taskId",
+    element: <TaskDetailsPage />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          style: {
+            color: "#35383E",
+          },
+        }}
+      />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </React.StrictMode>,

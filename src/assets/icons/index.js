@@ -1,31 +1,31 @@
-import IconAdd from "./add.svg?react";
-import IconArrowLeft from "./arrow-left.svg?react";
-import IconCheck from "./check.svg?react";
-import IconChevronRight from "./chevron-right.svg?react";
-import IconClodSun from "./cloud-sun.svg?react";
-import IconDetail from "./details.svg?react";
-import IconGlassWater from "./glass-water.svg?react";
-import IconHome from "./home.svg?react";
-import IconLoader from "./loader.svg?react";
-import IconMoon from "./moon.svg?react";
-import IconSun from "./sun.svg?react";
-import IconTask from "./tasks.svg?react";
-import IconTasks2 from "./tasks-2.svg?react";
-import IconTrash from "./trash.svg?react";
+import AddIcon from "./add.svg?react";
+import ArrowLeftIcon from "./arrow-left.svg?react";
+import CheckIcon from "./check.svg?react";
+import ChevronRightIcon from "./chevron-right.svg?react";
+import CloudSunIcon from "./cloud-sun.svg?react";
+import DetailsIcon from "./details.svg?react";
+import GlassWaterIcon from "./glass-water.svg?react";
+import HomeIcon from "./home.svg?react";
+import LoaderIcon from "./loader.svg?react";
+import MoonIcon from "./moon.svg?react";
+import SunIcon from "./sun.svg?react";
+import TasksIcon from "./tasks.svg?react";
+import Tasks2Icon from "./tasks-2.svg?react";
+import TrashIcon from "./trash.svg?react";
 
 export {
-  IconAdd,
-  IconArrowLeft,
-  IconCheck,
-  IconChevronRight,
-  IconClodSun,
-  IconDetail,
-  IconGlassWater,
-  IconHome,
-  IconLoader,
-  IconMoon,
-  IconSun,
-  IconTask,
-  IconTasks2,
-  IconTrash,
+  AddIcon,
+  ArrowLeftIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  CloudSunIcon,
+  DetailsIcon,
+  GlassWaterIcon,
+  HomeIcon,
+  LoaderIcon,
+  MoonIcon,
+  SunIcon,
+  Tasks2Icon,
+  TasksIcon,
+  TrashIcon,
 };

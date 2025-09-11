@@ -1,85 +1,57 @@
-import "./Menu/MenuStyle.css";
-
-import { useState } from "react";
-
-import { IconClodSun, IconMoon, IconSun } from "../assets/icons";
-import TaskDay from "../components/TaskDay";
-import useGetTasks from "../hooks/data/use-get-tasks";
-import AddTaskDailog from "./addTaskDailog";
-import DivTask from "./DivTask";
+import { CloudSunIcon, MoonIcon, SunIcon } from "../assets/icons";
+import { useGetTasks } from "../hooks/data/use-get-tasks";
 import Header from "./Header";
-import SidebarMenu from "./Menu/ButtonMenu";
 import TaskItem from "./TaskItem";
+import TasksSeparator from "./TasksSeparator";
 
 const Tasks = () => {
-  const [addDailogTaksOpen, setaddDailogTaksOpen] = useState(false);
-
   const { data: tasks } = useGetTasks();
 
-  const taskMorning = tasks?.filter((task) => task?.time === "morning");
-  const taskAfftermoon = tasks?.filter((task) => task?.time === "afternoon");
-  const taskNight = tasks?.filter((task) => task?.time === "night");
+  const morningTasks = tasks?.filter((task) => task.time === "morning");
+  const afternoonTasks = tasks?.filter((task) => task.time === "afternoon");
+  const eveningTasks = tasks?.filter((task) => task.time === "evening");
 
   return (
-    <div className="w-full space-y-6 px-8 py-4 lg:py-16">
-      <SidebarMenu />
-
-      <Header
-        title="Minhas tarefas"
-        subTitle="Minhas Tarefas"
-        addDailog={setaddDailogTaksOpen}
-      />
-      <AddTaskDailog
-        isOpen={addDailogTaksOpen}
-        handleClose={() => setaddDailogTaksOpen(false)}
-        tasks={tasks}
-      />
-      <div className="w-full space-y-6 rounded-md bg-brand-white p-6">
-        <DivTask>
-          <TaskDay title="Manhã">
-            <IconSun />
-          </TaskDay>
-          {taskMorning?.length > 0 ? (
-            taskMorning?.map((taskM) => (
-              <TaskItem key={taskM.id} task={taskM} />
-            ))
-          ) : (
+    <div className="w-full space-y-6 px-8 py-16">
+      <Header subtitle="Minhas Tarefas" title="Minhas Tarefas" />
+      <div className="rounded-xl bg-white p-6">
+        <div className="space-y-3">
+          <TasksSeparator title="Manhã" icon={<SunIcon />} />
+          {morningTasks?.length === 0 && (
             <p className="text-sm text-brand-text-gray">
-              Não há tarefas para este período
+              Nenhuma tarefa cadastrada para o período da manhã.
             </p>
           )}
-        </DivTask>
+          {morningTasks?.map((task) => (
+            <TaskItem key={task.id} task={task} />
+          ))}
+        </div>
 
-        <DivTask>
-          <TaskDay title={"Tarde"}>
-            <IconClodSun />
-          </TaskDay>
-          {taskAfftermoon?.length > 0 ? (
-            taskAfftermoon?.map((taskM) => (
-              <TaskItem key={taskM.id} task={taskM} />
-            ))
-          ) : (
+        <div className="my-6 space-y-3">
+          <TasksSeparator title="Tarde" icon={<CloudSunIcon />} />
+          {afternoonTasks?.length === 0 && (
             <p className="text-sm text-brand-text-gray">
-              Não há tarefas para este período
+              Nenhuma tarefa cadastrada para o período da tarde.
             </p>
           )}
-        </DivTask>
+          {afternoonTasks?.map((task) => (
+            <TaskItem key={task.id} task={task} />
+          ))}
+        </div>
 
-        <DivTask>
-          <TaskDay title={"Noite"}>
-            <IconMoon />
-          </TaskDay>
-          {taskNight?.length > 0 ? (
-            taskNight?.map((taskM) => <TaskItem key={taskM.id} task={taskM} />)
-          ) : (
+        <div className="space-y-3">
+          <TasksSeparator title="Noite" icon={<MoonIcon />} />
+          {eveningTasks?.length === 0 && (
             <p className="text-sm text-brand-text-gray">
-              Não há tarefas para este período
+              Nenhuma tarefa cadastrada para o período da noite.
             </p>
           )}
-        </DivTask>
+          {eveningTasks?.map((task) => (
+            <TaskItem key={task.id} task={task} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
-
 export default Tasks;

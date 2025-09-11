@@ -1,28 +1,29 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 
-import ErrorMenssage from "./ErrrorMenssage";
-import LabelInput from "./LabelInput";
+import InputErrorMessage from "./InputErrorMessage";
+import InputLabel from "./InputLabel";
 
-const Input = forwardRef(({ title, error, ...props }, ref) => {
+const Input = forwardRef(({ label, errorMessage, ...rest }, ref) => {
   return (
-    <div className="flex w-full flex-col gap-1">
-      <LabelInput htmlFor={props.id}>{title}</LabelInput>
+    <div className="flex flex-col space-y-1 text-left">
+      <InputLabel htmlFor={rest.id}>{label}</InputLabel>
       <input
-        className="rounded-lg border-2 border-brand-border py-3 pl-6 outline-brand-primary"
+        className="rounded-lg border border-solid border-brand-border px-4 py-3 outline-brand-primary placeholder:text-sm placeholder:text-brand-text-gray"
         ref={ref}
-        {...props}
+        {...rest}
       />
-      <ErrorMenssage>{error}</ErrorMenssage>
+      {errorMessage && <InputErrorMessage>{errorMessage}</InputErrorMessage>}
     </div>
   );
 });
 
 Input.displayName = "Input";
-
 Input.propTypes = {
-  title: PropTypes.string,
-  error: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 export default Input;

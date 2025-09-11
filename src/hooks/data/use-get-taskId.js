@@ -14,6 +14,7 @@ function useGetTaskId(taskId) {
 
       return tasksId;
     },
+    initialData: [],
   });
 }
 

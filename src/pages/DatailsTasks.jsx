@@ -35,9 +35,7 @@ const DetailsTasks = () => {
   }, [tasks, reset]);
 
   // delete
-  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask(
-    tasks?.id,
-  );
+  const { mutate: deleteTask, isPending: isDeleting } = useDeleteTask(tasks.id);
 
   // update
   const { mutate: updateTask, isPending: isUpdating } = useUpdateTask(taskId);
@@ -81,12 +79,12 @@ const DetailsTasks = () => {
             <Link to={"/"} className="flex cursor-pointer items-center gap-2">
               Minhas tarefas <IconChevronRight />{" "}
             </Link>
-            <p className="font-semibold text-brand-primary">{tasks?.title}</p>
+            <p className="font-semibold text-brand-primary">{tasks.title}</p>
           </div>
 
           <div className="flex w-full flex-col items-center justify-between gap-3 sm:flex-row">
             <h1 className="text-xl font-bold text-brand-dark-blue">
-              {tasks?.title}
+              {tasks.title}
             </h1>
             <Button onClick={handleDeleteTask} color="danger">
               {isDeleting ? (

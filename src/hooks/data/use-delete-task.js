@@ -12,6 +12,7 @@ function useDeleteTask(taskId) {
 
       return newTasks;
     },
+    initialData: [],
     onSuccess: (newTasks) => {
       queryClient.setQueryData(["tasks"], (oldData) => {
         return oldData.filter((task) => task.id !== newTasks.id);

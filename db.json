@@ -1,18 +1,11 @@
 {
   "tasks": [
     {
-      "id": "02f7f431-fb09-4765-8da0-5b75eecc22c8",
-      "title": "teste 2",
-      "description": "teste 2",
-      "time": "morning",
-      "status": "in_progress"
-    },
-    {
       "id": "eab2df2c-8c0b-42ba-92de-5e94195da587",
       "title": "bola",
       "description": "bola",
       "time": "afternoon",
-      "status": "in_progress"
+      "status": "done"
     }
   ],
   "water": [
@@ -38,7 +31,7 @@
       "id": "4",
       "quantity": "2 litros",
       "value": 2,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "5",

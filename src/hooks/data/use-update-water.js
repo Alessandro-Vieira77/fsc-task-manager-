@@ -23,6 +23,7 @@ function useUpdateWater(taskId) {
 
       return updateTask;
     },
+    initialData: [],
   });
 }
 

@@ -10,6 +10,7 @@ function useGetTasks() {
       const { data: task } = await api.get("tasks");
       return task;
     },
+    initialData: [],
   });
 }
 

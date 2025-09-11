@@ -11,6 +11,7 @@ function useGetTasks() {
 
       return waterTasks;
     },
+    initialData: [],
   });
 }
 

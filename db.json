@@ -1,18 +1,11 @@
 {
   "tasks": [
     {
-      "id": "8422efe5-bcec-48e5-b487-71bf4fd568dd",
-      "title": "TESTE 2",
-      "description": "TESTE 2",
-      "time": "afternoon",
-      "status": "done"
-    },
-    {
       "id": "02f7f431-fb09-4765-8da0-5b75eecc22c8",
       "title": "teste 2",
       "description": "teste 2",
       "time": "morning",
-      "status": "not_started"
+      "status": "in_progress"
     },
     {
       "id": "eab2df2c-8c0b-42ba-92de-5e94195da587",
@@ -39,7 +32,7 @@
       "id": "3",
       "quantity": "1,5 litros",
       "value": 1.5,
-      "status": "not_started"
+      "status": "done"
     },
     {
       "id": "4",

@@ -17,9 +17,9 @@ function HomePage() {
   const { data: tasks } = useGetTasks();
   const { data: waterTasks } = useGetWaterTask();
 
-  const totalWater = waterTasks?.reduce((accumulator, currentValue) => {
-    if (currentValue?.status === "done") {
-      return accumulator + (currentValue?.value || 0);
+  const totalWater = waterTasks.reduce((accumulator, currentValue) => {
+    if (currentValue.status === "done") {
+      return accumulator + (currentValue.value || 0);
     }
     return accumulator;
   }, 0);

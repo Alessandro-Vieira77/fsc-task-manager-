@@ -1,4 +1,5 @@
 import DashboardCards from "../components/DashboardCards";
+// corregido o nome do componente
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import TaskItem from "../components/TaskItem";

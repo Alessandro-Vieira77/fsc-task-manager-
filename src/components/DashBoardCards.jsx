@@ -2,7 +2,7 @@ import { LoaderIcon, Tasks2Icon, TasksIcon } from "../assets/icons";
 import { useGetTasks } from "../hooks/data/use-get-tasks";
 import DashboardCard from "./DashboardCard";
 
-const DashboardCards = () => {
+const DashBoardCards = () => {
   const { data: tasks } = useGetTasks();
 
   const notStartedTasks = tasks?.filter(
@@ -39,4 +39,4 @@ const DashboardCards = () => {
   );
 };
 
-export default DashboardCards;
+export default DashBoardCards;
